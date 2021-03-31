@@ -1,13 +1,29 @@
+import { FiUser } from 'react-icons/fi';
+
+import logo from '../../assets/logo.svg';
+
+import { Container, Content } from './styles';
+
 export default function Header() {
   return (
-    <header>
-      <h1>Classificados</h1>
+    <Container>
+      <Content>
+        <div>
+          <img src={logo} alt="CRO-RJ" />
 
-      <div>
-        <span>Olá Paulo Felippe</span>
+          <nav>
+            <a href="home">Início</a>
+            <a href="novo">Novo</a>
+            <a href="pesquisa">Pesquisa</a>
+          </nav>
+        </div>
 
-        <p>Logout</p>
-      </div>
-    </header>
+        <div>
+          <span>Seja bem-vindo</span>
+
+          <FiUser color="#fff" />
+        </div>
+      </Content>
+    </Container>
   );
 }
