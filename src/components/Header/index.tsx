@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { FiUser } from 'react-icons/fi';
 
 import logo from '../../assets/logo.svg';
@@ -12,9 +13,9 @@ export default function Header() {
           <img src={logo} alt="CRO-RJ" />
 
           <nav>
-            <a href="home">Início</a>
-            <a href="novo">Novo</a>
-            <a href="pesquisa">Pesquisa</a>
+            <Link to="/">Início</Link>
+            <Link to="/new">Novo</Link>
+            <Link to="pesquisa">Pesquisa</Link>
           </nav>
         </div>
 

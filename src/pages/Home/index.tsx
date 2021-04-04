@@ -1,8 +1,11 @@
+import { useHistory } from 'react-router-dom';
 import { FiAlertCircle, FiPlus, FiList } from 'react-icons/fi';
 
 import { Container, Content, RuleSection } from './styles';
 
-export default function Dashboard() {
+export function Home() {
+  const history = useHistory();
+
   return (
     <Container>
       <Content>
@@ -84,7 +87,7 @@ export default function Dashboard() {
         </RuleSection>
 
         <div>
-          <button type="button">
+          <button type="button" onClick={() => history.push('/new')}>
             <FiPlus color="#fff" />
 
             <span>Adicionar</span>
