@@ -39,6 +39,7 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "jsx-a11y/label-has-associated-control": "off",
     "react/require-default-props": "off",
+    "camelcase": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

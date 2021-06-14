@@ -10,13 +10,11 @@ export const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   flex: 1;
 
   background: #fff;
   padding: 0.75rem 0.5rem;
   border-radius: 0.5rem;
-
   border: 3px solid #fff;
   color: #333;
 
@@ -44,6 +42,7 @@ export const Container = styled.div<ContainerProps>`
     border: 0;
     color: #333;
     font-size: 1.1rem;
+    outline: none;
 
     &::placeholder {
       color: #666360;

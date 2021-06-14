@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { darken } from 'polished';
+import ReactSelect from 'react-select';
 
 interface ContainerProps {
   isFocused: boolean;
@@ -10,13 +11,11 @@ export const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   flex: 1;
 
   background: #fff;
   padding: 0.75rem 0.5rem;
   border-radius: 0.5rem;
-
   border: 3px solid #fff;
   color: #333;
 
@@ -38,23 +37,23 @@ export const Container = styled.div<ContainerProps>`
       `}
   }
 
-  textarea {
-    flex: 1;
-    background: transparent;
-    border: 0;
-    color: #333;
-    font-size: 1.1rem;
-    outline: none;
-
-    &::placeholder {
-      color: #666360;
-    }
-  }
-
   ${props =>
     props.isFocused &&
     css`
       color: #96030f;
       border-color: ${darken(0.1, '#96030f')};
     `}
+`;
+
+export const StyledSelect = styled(ReactSelect)`
+  flex: 1;
+  background: transparent;
+  border: 0;
+  color: #333;
+  font-size: 1.1rem;
+  outline: none;
+
+  &::placeholder {
+    color: #666360;
+  }
 `;

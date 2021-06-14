@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Container = styled.div`
   height: calc(100vh - 5rem);
@@ -16,6 +17,9 @@ export const Content = styled.div`
   background: #96030f;
   padding: 1rem 1.5rem 1.5rem;
   border-radius: 0.5rem;
+
+  display: flex;
+  flex-direction: column;
 
   h1 {
     color: #fff;
@@ -61,15 +65,31 @@ export const ActionsContainer = styled.div`
 
   button + button {
     margin-left: 2rem;
+    color: #fff;
+    background: none;
+
+    transition: color 0.2s;
+  }
+
+  button + button:hover {
+    color: ${darken(0.2, '#fff')};
   }
 
   button {
     width: 200px;
     border: none;
-    background: #96030f;
-    color: #fff;
+    background: #fff;
+    color: #333;
     padding: 0.75rem 1.25rem;
     border-radius: 0.25rem;
     font-size: 1rem;
+
+    transition: background 0.2s;
+
+    &:first-child {
+      &:hover {
+        background: ${darken(0.2, '#fff')};
+      }
+    }
   }
 `;
