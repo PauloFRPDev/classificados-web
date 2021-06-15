@@ -10,6 +10,7 @@ import { Input } from '../../components/Input';
 import { TextArea } from '../../components/TextArea';
 
 import api from '../../services/api';
+import { useToast } from '../../hooks/toast';
 
 import {
   Container,
@@ -54,6 +55,8 @@ export function NewAd() {
   const [cities, setCities] = useState<CityProps[]>([]);
   const [districts, setDistricts] = useState<DistrictProps[]>([]);
 
+  const { addToast } = useToast();
+
   useEffect(() => {
     async function loadCategories(): Promise<void> {
       const response = await api.get('categories');
@@ -61,69 +64,93 @@ export function NewAd() {
       setCategories(response.data);
     }
 
-    async function loadCities(): Promise<void> {
-      const response = await api.get('/cities');
-
-      setCities(response.data);
-    }
-
-    async function loadDistricts(): Promise<void> {
-      const response = await api.get('/districts');
-
-      setDistricts(response.data);
-    }
-
     loadCategories();
-    loadCities();
-    loadDistricts();
   }, []);
 
-  const handleInsertAd = useCallback(async (data: AdFormData) => {
-    try {
-      formRef.current?.setErrors({});
+  const handleSearchCities = useCallback(async (citySearched: string) => {
+    const response = await api.get('/cities', {
+      params: {
+        title: citySearched,
+      },
+    });
 
-      const schema = Yup.object().shape({
-        cpf: Yup.string().required('CPF obrigatório'),
-        phone_number: Yup.string().required('Telefone obrigatório'),
-        email: Yup.string()
-          .required('E-mail obrigatório')
-          .email('Digite um e-mail válido'),
-        description: Yup.string().required('Anúncio obrigatório'),
-      });
+    setCities(response.data);
+  }, []);
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+  const handleSearchDistricts = useCallback(async (districtSearch: string) => {
+    const response = await api.get('/districts', {
+      params: {
+        title: districtSearch,
+      },
+    });
 
-      const {
-        cpf,
-        phone_number,
-        email,
-        category_id,
-        city_id,
-        district_id,
-        description,
-      } = data;
+    setDistricts(response.data);
+  }, []);
 
-      const formData = {
-        cpf,
-        phone_number,
-        email,
-        category_id: Number(category_id),
-        city_id: Number(city_id),
-        district_id: Number(district_id),
-        description,
-      };
+  const handleInsertAd = useCallback(
+    async (data: AdFormData, { reset }) => {
+      try {
+        formRef.current?.setErrors({});
 
-      await api.post('/ads', formData);
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err);
+        const schema = Yup.object().shape({
+          cpf: Yup.string().required('CPF obrigatório'),
+          phone_number: Yup.string().required('Telefone obrigatório'),
+          email: Yup.string()
+            .required('E-mail obrigatório')
+            .email('Digite um e-mail válido'),
+          description: Yup.string().required('Anúncio obrigatório'),
+        });
 
-        formRef.current?.setErrors(errors);
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        const {
+          cpf,
+          phone_number,
+          email,
+          category_id,
+          city_id,
+          district_id,
+          description,
+        } = data;
+
+        const formData = {
+          cpf,
+          phone_number,
+          email,
+          category_id: Number(category_id),
+          city_id: Number(city_id),
+          district_id: Number(district_id),
+          description,
+        };
+
+        await api.post('/ads', formData);
+
+        addToast({
+          type: 'success',
+          title: 'Anúncio criado',
+          description: 'Seu anúncio foi criado com sucesso.',
+        });
+
+        reset();
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+
+          formRef.current?.setErrors(errors);
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Erro na criação do anúncio',
+          description:
+            'Houve um erro ao tentar inserir um anúncio, por favor tente novamente.',
+        });
       }
-    }
-  }, []);
+    },
+    [addToast],
+  );
 
   const handlePhoneChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPhoneInputValue(event.target.value);
@@ -192,6 +219,11 @@ export function NewAd() {
               name="city_id"
               label="Cidade"
               placeholderText="Selecione a cidade"
+              onInputChange={city => {
+                if (city.length >= 3) {
+                  handleSearchCities(city);
+                }
+              }}
               options={cities}
             />
 
@@ -200,6 +232,11 @@ export function NewAd() {
               name="district_id"
               label="Bairro"
               placeholderText="Selecione o estado"
+              onInputChange={district => {
+                if (district.length >= 3) {
+                  handleSearchDistricts(district);
+                }
+              }}
               options={districts}
             />
           </FormForthLine>

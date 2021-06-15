@@ -15,7 +15,7 @@ export default function Select({
   placeholderText,
   ...rest
 }: Props) {
-  const selectRef = useRef(null);
+  const selectRef = useRef<HTMLSelectElement>(null);
 
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -29,7 +29,7 @@ export default function Select({
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
 
-    // setIsFilled(!!selectRef.current?.value);
+    setIsFilled(!!selectRef.current?.value);
   }, []);
 
   useEffect(() => {
@@ -62,6 +62,7 @@ export default function Select({
         ref={selectRef}
         classNamePrefix="react-select"
         placeholder={placeholderText}
+        noOptionsMessage={() => 'Ops! Nenhuma opção encontrada'}
         {...rest}
       />
 
