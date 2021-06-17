@@ -8,6 +8,7 @@ interface Props extends SelectProps<OptionTypeBase> {
   name: string;
   label?: string;
   placeholderText: string;
+  districtSelected?: string;
 }
 export default function Select({
   name,
@@ -36,6 +37,7 @@ export default function Select({
     registerField({
       name: fieldName,
       ref: selectRef.current,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       getValue: (ref: any) => {
         if (rest.isMulti) {
           if (!ref.state.value) {

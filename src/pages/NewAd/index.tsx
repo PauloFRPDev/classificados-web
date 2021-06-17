@@ -32,6 +32,15 @@ interface AdFormData {
   description: string;
 }
 
+interface JurisdictedData {
+  cpfcnpj: string;
+  nome: string;
+  categoryId: number;
+  category: string;
+  numeroRegistro: number;
+  nomeRazaoSocial: string;
+}
+
 interface CategoryProps {
   value: number;
   label: string;
@@ -54,6 +63,7 @@ export function NewAd() {
   const [categories, setCategories] = useState<CategoryProps[]>([]);
   const [cities, setCities] = useState<CityProps[]>([]);
   const [districts, setDistricts] = useState<DistrictProps[]>([]);
+  const [jurisdicted, setJurisdicted] = useState<JurisdictedData>();
 
   const { addToast } = useToast();
 
@@ -156,6 +166,29 @@ export function NewAd() {
     setPhoneInputValue(event.target.value);
   };
 
+  const handleSearchJurisdicted = async (cpf: string) => {
+    if (!cpf.includes('_') && cpf !== '') {
+      const response = await api.get('jurisdicted', {
+        headers: {
+          cpf,
+        },
+      });
+
+      setJurisdicted(response.data);
+    }
+  };
+
+  useEffect(() => {
+    if (jurisdicted) {
+      formRef.current?.setFieldValue('name', jurisdicted.nomeRazaoSocial);
+      formRef.current?.setFieldValue('category', jurisdicted.category);
+      formRef.current?.setFieldValue(
+        'subscriptionNumber',
+        jurisdicted.numeroRegistro,
+      );
+    }
+  }, [jurisdicted]);
+
   return (
     <Container>
       <Content>
@@ -164,11 +197,14 @@ export function NewAd() {
         <Form ref={formRef} onSubmit={handleInsertAd}>
           <FormFirstLine>
             <InputMask
+              mask="999.999.999-99"
+              onChange={e => {
+                handleSearchJurisdicted(e.target.value);
+              }}
               type="text"
               name="cpf"
               label="CPF"
               placeholder="Insira seu cpf"
-              mask="999.999.999-99"
             />
 
             <Input type="text" name="category" disabled label="Categoria" />
