@@ -10,6 +10,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @media (max-height: 900px) {
+    margin: 5rem auto;
+  }
 `;
 
 export const Content = styled.div`

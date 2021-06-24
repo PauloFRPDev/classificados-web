@@ -105,6 +105,10 @@ export function NewAd() {
 
       const schema = Yup.object().shape({
         cpf: Yup.string().required('CPF obrigatório'),
+        category: Yup.string().required('Categoria obrigatória'),
+        subscriptionNumber: Yup.string().required(
+          'Número de inscrição obrigatório',
+        ),
         phone_number: Yup.string().required('Telefone obrigatório'),
         email: Yup.string()
           .required('E-mail obrigatório')
