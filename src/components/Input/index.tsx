@@ -1,16 +1,24 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useField } from '@unform/core';
+import PulseLoader from 'react-spinners/PulseLoader';
 
 import { Container } from './styles';
 
 interface Props {
   name: string;
   label?: string;
+  isSearching?: boolean;
 }
 
 type InputProps = JSX.IntrinsicElements['input'] & Props;
 
-export function Input({ name, label, ...rest }: InputProps) {
+export function Input({
+  name,
+  label,
+  isSearching,
+  disabled,
+  ...rest
+}: InputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [isFocused, setIsFocused] = useState(false);
@@ -47,7 +55,12 @@ export function Input({ name, label, ...rest }: InputProps) {
   }, [fieldName, registerField]);
 
   return (
-    <Container isFilled={isFilled} isFocused={isFocused}>
+    <Container
+      isFilled={isFilled}
+      isFocused={isFocused}
+      isSearching={isSearching}
+      isDisabled={disabled}
+    >
       {label && <label htmlFor={fieldName}>{label}</label>}
 
       <input
@@ -55,9 +68,12 @@ export function Input({ name, label, ...rest }: InputProps) {
         onBlur={handleInputBlur}
         id={fieldName}
         ref={inputRef}
+        disabled={disabled}
         defaultValue={defaultValue}
         {...rest}
       />
+
+      {isSearching && <PulseLoader size={10} speedMultiplier={0.5} />}
 
       {error && <span>{error}</span>}
     </Container>

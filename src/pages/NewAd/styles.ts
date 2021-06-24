@@ -25,37 +25,32 @@ export const Content = styled.div`
     color: #fff;
     margin-bottom: 2rem;
   }
+
+  .name-jurisdicted {
+    margin-bottom: 1rem;
+  }
 `;
 
 export const FormFirstLine = styled.div`
   display: flex;
+  gap: 1rem;
 
   margin-bottom: 1rem;
-
-  div + div {
-    margin-left: 1rem;
-  }
 `;
 
 export const FormSecondLine = styled.div`
   display: flex;
+  gap: 1rem;
 
   margin-bottom: 1rem;
-
-  div + div {
-    margin-left: 1rem;
-  }
 `;
 
 export const FormForthLine = styled.div`
   display: flex;
+  gap: 1rem;
 
   margin-top: 1rem;
   margin-bottom: 1rem;
-
-  div + div {
-    margin-left: 1rem;
-  }
 `;
 
 export const ActionsContainer = styled.div`

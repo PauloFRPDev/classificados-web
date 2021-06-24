@@ -4,6 +4,8 @@ import { darken } from 'polished';
 interface ContainerProps {
   isFocused: boolean;
   isFilled: boolean;
+  isSearching?: boolean;
+  isDisabled?: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -17,6 +19,27 @@ export const Container = styled.div<ContainerProps>`
   border-radius: 0.5rem;
   border: 3px solid #fff;
   color: #333;
+
+  height: 70px;
+
+  ${props =>
+    props.isFocused &&
+    css`
+      color: #96030f;
+      border-color: ${darken(0.1, '#96030f')};
+    `}
+
+  ${props =>
+    props.isSearching &&
+    css`
+      cursor: not-allowed;
+    `}
+
+  ${props =>
+    props.isDisabled &&
+    css`
+      cursor: not-allowed;
+    `}
 
   label {
     color: #000;
@@ -47,12 +70,17 @@ export const Container = styled.div<ContainerProps>`
     &::placeholder {
       color: #666360;
     }
-  }
 
-  ${props =>
-    props.isFocused &&
-    css`
-      color: #96030f;
-      border-color: ${darken(0.1, '#96030f')};
-    `}
+    ${props =>
+      props.isSearching &&
+      css`
+        display: none;
+      `}
+
+    ${props =>
+      props.isDisabled &&
+      css`
+        cursor: not-allowed;
+      `}
+  }
 `;

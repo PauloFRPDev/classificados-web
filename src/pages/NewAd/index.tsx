@@ -64,6 +64,7 @@ export function NewAd() {
   const [cities, setCities] = useState<CityProps[]>([]);
   const [districts, setDistricts] = useState<DistrictProps[]>([]);
   const [jurisdicted, setJurisdicted] = useState<JurisdictedData>();
+  const [isSearching, setIsSearching] = useState(false);
 
   const { addToast } = useToast();
 
@@ -167,15 +168,33 @@ export function NewAd() {
   };
 
   const handleSearchJurisdicted = async (cpf: string) => {
-    if (!cpf.includes('_') && cpf !== '') {
-      const response = await api.get('jurisdicted', {
-        headers: {
-          cpf,
-        },
-      });
+    try {
+      if (!cpf.includes('_') && cpf !== '') {
+        setIsSearching(true);
 
-      setJurisdicted(response.data);
+        const response = await api.get('jurisdicted', {
+          headers: {
+            cpf,
+          },
+        });
+
+        setIsSearching(false);
+        setJurisdicted(response.data);
+      }
+    } catch (err) {
+      setIsSearching(false);
+
+      formRef.current?.setFieldValue(
+        'name',
+        'Ops, não pudemos encontrar nenhum registro.',
+      );
+      formRef.current?.setFieldValue('category', '');
+      formRef.current?.setFieldValue('subscriptionNumber', '');
     }
+  };
+
+  const handleCleanFields = () => {
+    formRef.current?.reset();
   };
 
   useEffect(() => {
@@ -204,20 +223,37 @@ export function NewAd() {
               type="text"
               name="cpf"
               label="CPF"
+              disabled={isSearching}
+              style={isSearching ? { cursor: 'not-allowed' } : {}}
               placeholder="Insira seu cpf"
             />
 
-            <Input type="text" name="category" disabled label="Categoria" />
+            <Input
+              type="text"
+              name="category"
+              disabled
+              label="Categoria"
+              isSearching={isSearching}
+            />
 
             <Input
               type="text"
               name="subscriptionNumber"
               disabled
               label="Inscrição"
+              isSearching={isSearching}
             />
-
-            <Input type="text" name="name" disabled label="Nome" />
           </FormFirstLine>
+
+          <div className="name-jurisdicted">
+            <Input
+              type="text"
+              name="name"
+              disabled
+              label="Nome"
+              isSearching={isSearching}
+            />
+          </div>
 
           <FormSecondLine>
             <InputMask
@@ -286,7 +322,9 @@ export function NewAd() {
           <ActionsContainer>
             <button type="submit">CADASTRAR</button>
 
-            <button type="button">LIMPAR</button>
+            <button type="button" onClick={handleCleanFields}>
+              LIMPAR
+            </button>
           </ActionsContainer>
         </Form>
       </Content>
