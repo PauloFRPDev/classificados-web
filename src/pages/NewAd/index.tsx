@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState, useCallback, useEffect } from 'react';
+import { ChangeEvent, useRef, useState, useEffect } from 'react';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -9,8 +9,9 @@ import { InputMask } from '../../components/InputMask';
 import { Input } from '../../components/Input';
 import { TextArea } from '../../components/TextArea';
 
-import api from '../../services/api';
 import { useToast } from '../../hooks/toast';
+
+import api from '../../services/api';
 
 import {
   Container,
@@ -78,7 +79,7 @@ export function NewAd() {
     loadCategories();
   }, []);
 
-  const handleSearchCities = useCallback(async (citySearched: string) => {
+  const handleSearchCities = async (citySearched: string) => {
     const response = await api.get('/cities', {
       params: {
         title: citySearched,
@@ -86,9 +87,9 @@ export function NewAd() {
     });
 
     setCities(response.data);
-  }, []);
+  };
 
-  const handleSearchDistricts = useCallback(async (districtSearch: string) => {
+  const handleSearchDistricts = async (districtSearch: string) => {
     const response = await api.get('/districts', {
       params: {
         title: districtSearch,
@@ -96,72 +97,69 @@ export function NewAd() {
     });
 
     setDistricts(response.data);
-  }, []);
+  };
 
-  const handleInsertAd = useCallback(
-    async (data: AdFormData, { reset }) => {
-      try {
-        formRef.current?.setErrors({});
+  const handleInsertAd = async (data: AdFormData) => {
+    try {
+      formRef.current?.setErrors({});
 
-        const schema = Yup.object().shape({
-          cpf: Yup.string().required('CPF obrigatório'),
-          phone_number: Yup.string().required('Telefone obrigatório'),
-          email: Yup.string()
-            .required('E-mail obrigatório')
-            .email('Digite um e-mail válido'),
-          description: Yup.string().required('Anúncio obrigatório'),
-        });
+      const schema = Yup.object().shape({
+        cpf: Yup.string().required('CPF obrigatório'),
+        phone_number: Yup.string().required('Telefone obrigatório'),
+        email: Yup.string()
+          .required('E-mail obrigatório')
+          .email('Digite um e-mail válido'),
+        description: Yup.string().required('Anúncio obrigatório'),
+      });
 
-        await schema.validate(data, {
-          abortEarly: false,
-        });
+      await schema.validate(data, {
+        abortEarly: false,
+      });
 
-        const {
-          cpf,
-          phone_number,
-          email,
-          category_id,
-          city_id,
-          district_id,
-          description,
-        } = data;
+      const {
+        cpf,
+        phone_number,
+        email,
+        category_id,
+        city_id,
+        district_id,
+        description,
+      } = data;
 
-        const formData = {
-          cpf,
-          phone_number,
-          email,
-          category_id: Number(category_id),
-          city_id: Number(city_id),
-          district_id: Number(district_id),
-          description,
-        };
+      const formData = {
+        cpf,
+        phone_number,
+        email,
+        category_id: Number(category_id),
+        city_id: Number(city_id),
+        district_id: Number(district_id),
+        description,
+      };
 
-        await api.post('/ads', formData);
+      await api.post('/ads', formData);
 
-        addToast({
-          type: 'success',
-          title: 'Anúncio criado',
-          description: 'Seu anúncio foi criado com sucesso.',
-        });
+      addToast({
+        type: 'success',
+        title: 'Anúncio criado',
+        description: 'Seu anúncio foi criado com sucesso.',
+      });
 
-        reset();
-      } catch (err) {
-        if (err instanceof Yup.ValidationError) {
-          const errors = getValidationErrors(err);
+      formRef.current?.reset();
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err);
 
-          formRef.current?.setErrors(errors);
-        }
-
-        addToast({
-          type: 'error',
-          title: 'Erro na criação do anúncio',
-          description:
-            'Houve um erro ao tentar inserir um anúncio, por favor tente novamente.',
-        });
+        formRef.current?.setErrors(errors);
       }
-    },
-    [addToast],
-  );
+
+      addToast({
+        type: 'error',
+        title: 'Erro na criação do anúncio',
+        description:
+          'Houve um erro ao tentar inserir um anúncio, por favor tente novamente.',
+      });
+    }
+  };
 
   const handlePhoneChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPhoneInputValue(event.target.value);
