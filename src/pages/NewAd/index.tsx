@@ -237,7 +237,7 @@ export function NewAd() {
               label="CPF"
               disabled={isSearching}
               style={isSearching ? { cursor: 'not-allowed' } : {}}
-              placeholder="Insira seu cpf"
+              // placeholder="Insira seu cpf"
             />
 
             <Input
@@ -278,14 +278,14 @@ export function NewAd() {
               type="text"
               name="phone_number"
               label="Telefone com DDD"
-              placeholder="Insira seu telefone para contato"
+              // placeholder="Insira seu telefone para contato"
             />
 
             <Input
               type="text"
               name="email"
               label="E-mail"
-              placeholder="Insira seu e-mail"
+              // placeholder="Insira seu e-mail"
             />
           </FormSecondLine>
 
@@ -328,7 +328,7 @@ export function NewAd() {
           <TextArea
             name="description"
             label="Anúncio"
-            placeholder="Digite seu anúncio"
+            // placeholder="Digite seu anúncio"
           />
 
           <ActionsContainer>

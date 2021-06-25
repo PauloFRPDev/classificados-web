@@ -19,7 +19,7 @@ export const Container = styled.div<ContainerProps>`
   padding: 0.5rem 0.25rem;
   border-radius: 0.5rem;
 
-  border: 3px solid #fff;
+  border: 1px solid #96030f;
   color: #333;
 
   > div {
@@ -61,6 +61,7 @@ export const Container = styled.div<ContainerProps>`
     props.isFocused &&
     css`
       color: #96030f;
+      border: 2px solid #96030f;
       border-color: ${darken(0.1, '#96030f')};
     `}
 `;

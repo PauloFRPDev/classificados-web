@@ -15,15 +15,17 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  background: #96030f;
+  /* background: #f0efef; */
+  background: #fff;
   padding: 1rem 1.5rem 1.5rem;
+  border: 2px solid #96030f;
   border-radius: 0.5rem;
 
   display: flex;
   flex-direction: column;
 
   h1 {
-    color: #fff;
+    color: #111827;
     margin-bottom: 2rem;
   }
 
@@ -73,21 +75,22 @@ export const ActionsContainer = styled.div`
 
   button + button {
     margin-left: 2rem;
-    color: #fff;
+    color: #111827;
     background: none;
+    border: 1px solid #96030f;
 
     transition: color 0.2s;
   }
 
   button + button:hover {
-    color: ${darken(0.2, '#fff')};
+    color: ${darken(0.05, '#fff')};
   }
 
   button {
     width: 200px;
     border: none;
-    background: #fff;
-    color: #333;
+    background: #96030f;
+    color: #fff;
     padding: 0.75rem 1.25rem;
     border-radius: 0.25rem;
     font-size: 1rem;
@@ -96,7 +99,7 @@ export const ActionsContainer = styled.div`
 
     &:first-child {
       &:hover {
-        background: ${darken(0.2, '#fff')};
+        background: ${darken(0.08, '#96030f')};
       }
     }
   }

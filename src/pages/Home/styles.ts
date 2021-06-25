@@ -72,7 +72,8 @@ export const Content = styled.div`
 `;
 
 export const RuleSection = styled.section`
-  border: 2px solid #96030f;
+  border: 3px solid #96030f;
+  background: #fff;
   border-radius: 0.5rem;
   padding: 1.25rem;
 

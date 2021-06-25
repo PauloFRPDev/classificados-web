@@ -1,3 +1,5 @@
+import { darken } from 'polished';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Container = styled.header`
@@ -22,19 +24,6 @@ export const Content = styled.div`
     img {
       height: 50px;
       margin-right: 5rem;
-    }
-
-    a + a {
-      margin-left: 1.5rem;
-    }
-
-    a {
-      font-size: 1.25rem;
-      color: #fff;
-
-      @media (max-width: 500px) {
-        display: none;
-      }
     }
 
     @media (max-width: 700px) {
@@ -64,5 +53,29 @@ export const Content = styled.div`
     @media (max-width: 700px) {
       display: none;
     }
+  }
+`;
+
+export const Nav = styled(NavLink).attrs({
+  activeStyle: {
+    background: `${darken(0.1, '#96030f')}`,
+  },
+})`
+  font-size: 1.25rem;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background 0.3s;
+
+  & + & {
+    margin-left: 1.5rem;
+  }
+
+  &:hover {
+    background: ${darken(0.1, '#96030f')};
+  }
+
+  @media (max-width: 500px) {
+    display: none;
   }
 `;

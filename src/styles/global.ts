@@ -1,10 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
 
+import backgroundImg from '../assets/background.png';
+
 export default createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+
+  html {
+    height: 100%;
   }
 
   @media (max-width: 1080px) {
@@ -20,9 +26,17 @@ export default createGlobalStyle`
   }
 
   body {
-    background: #e7e5eb;
+    /* background: #f5f5f5; */
+    /* background: url(${backgroundImg}) no-repeat center; */
+    background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.2)
+  ),url(${backgroundImg});
+    background-size: cover;
     color: #111827;
     -webkit-font-smoothing: antialised;
+    height: 100%;
   }
 
   button {

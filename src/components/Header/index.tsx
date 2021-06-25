@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
 import { FiUser } from 'react-icons/fi';
 
 import logo from '../../assets/logo.svg';
 
-import { Container, Content } from './styles';
+import { Container, Content, Nav } from './styles';
 
 export default function Header() {
   return (
@@ -13,9 +12,11 @@ export default function Header() {
           <img src={logo} alt="CRO-RJ" />
 
           <nav>
-            <Link to="/">Início</Link>
-            <Link to="/new">Novo</Link>
-            <Link to="pesquisa">Pesquisa</Link>
+            <Nav to="/" exact>
+              Início
+            </Nav>
+            <Nav to="/new">Novo</Nav>
+            <Nav to="pesquisa">Pesquisa</Nav>
           </nav>
         </div>
 
