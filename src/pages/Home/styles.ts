@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  height: calc(100vh - 5rem);
+  height: 100%;
   max-width: 1120px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 2rem;
 
   display: flex;
   align-items: center;
@@ -21,6 +21,10 @@ export const Content = styled.div`
     display: flex;
     justify-content: center;
     margin-top: 2rem;
+
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
 
     button {
       width: 200px;
@@ -54,6 +58,14 @@ export const Content = styled.div`
         font-size: 1.25rem;
         border-left: 1px solid #fff;
         padding-left: 1rem;
+      }
+
+      @media (max-width: 500px) {
+        width: 100%;
+
+        & + button {
+          margin-top: 1rem;
+        }
       }
     }
   }
