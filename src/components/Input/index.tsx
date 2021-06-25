@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useField } from '@unform/core';
+import { FiAlertCircle } from 'react-icons/fi';
 import PulseLoader from 'react-spinners/PulseLoader';
 
-import { Container } from './styles';
+import { Container, Error } from './styles';
 
 interface Props {
   name: string;
@@ -63,19 +64,25 @@ export function Input({
     >
       {label && <label htmlFor={fieldName}>{label}</label>}
 
-      <input
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        id={fieldName}
-        ref={inputRef}
-        disabled={disabled}
-        defaultValue={defaultValue}
-        {...rest}
-      />
+      <div>
+        <input
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+          id={fieldName}
+          ref={inputRef}
+          disabled={disabled}
+          defaultValue={defaultValue}
+          {...rest}
+        />
+
+        {error && (
+          <Error title={error}>
+            <FiAlertCircle color="#c53030" size={20} />
+          </Error>
+        )}
+      </div>
 
       {isSearching && <PulseLoader size={10} speedMultiplier={0.5} />}
-
-      {error && <span>{error}</span>}
     </Container>
   );
 }

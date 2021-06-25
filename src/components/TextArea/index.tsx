@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useField } from '@unform/core';
+import { FiAlertCircle } from 'react-icons/fi';
 
-import { Container } from './styles';
+import { Container, Error } from './styles';
 
 interface Props {
   name: string;
@@ -50,17 +51,23 @@ export function TextArea({ name, label, ...rest }: TextAreaProps) {
     <Container isFilled={isFilled} isFocused={isFocused}>
       {label && <label htmlFor={fieldName}>{label}</label>}
 
-      <textarea
-        onFocus={handleTextAreaFocus}
-        onBlur={handleTextAreaBlur}
-        id={fieldName}
-        ref={textAreaRef}
-        defaultValue={defaultValue}
-        rows={5}
-        {...rest}
-      />
+      <div>
+        <textarea
+          onFocus={handleTextAreaFocus}
+          onBlur={handleTextAreaBlur}
+          id={fieldName}
+          ref={textAreaRef}
+          defaultValue={defaultValue}
+          rows={5}
+          {...rest}
+        />
 
-      {error && <span>{error}</span>}
+        {error && (
+          <Error title={error}>
+            <FiAlertCircle color="#c53030" size={20} />
+          </Error>
+        )}
+      </div>
     </Container>
   );
 }

@@ -2,18 +2,15 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  height: calc(100vh - 5rem);
+  /* height: calc(100vh - 5rem); */
+  height: 100%;
   max-width: 1120px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 2rem;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-  @media (max-height: 900px) {
-    margin: 5rem auto;
-  }
 `;
 
 export const Content = styled.div`
@@ -40,6 +37,10 @@ export const FormFirstLine = styled.div`
   gap: 1rem;
 
   margin-bottom: 1rem;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
 `;
 
 export const FormSecondLine = styled.div`
@@ -47,6 +48,10 @@ export const FormSecondLine = styled.div`
   gap: 1rem;
 
   margin-bottom: 1rem;
+
+  @media (max-width: 560px) {
+    flex-direction: column;
+  }
 `;
 
 export const FormForthLine = styled.div`
@@ -55,6 +60,10 @@ export const FormForthLine = styled.div`
 
   margin-top: 1rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 560px) {
+    flex-direction: column;
+  }
 `;
 
 export const ActionsContainer = styled.div`

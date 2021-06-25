@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useField } from '@unform/core';
 import ReactInputMask, { Props as InputMaskProps } from 'react-input-mask';
+import { FiAlertCircle } from 'react-icons/fi';
 
-import { Container } from './styles';
+import { Container, Error } from './styles';
 
 interface Props extends InputMaskProps {
   name: string;
@@ -47,16 +48,22 @@ export function InputMask({ name, label, ...rest }: Props) {
     <Container isFilled={isFilled} isFocused={isFocused}>
       {label && <label htmlFor={fieldName}>{label}</label>}
 
-      <ReactInputMask
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        id={fieldName}
-        ref={inputRef}
-        defaultValue={defaultValue}
-        {...rest}
-      />
+      <div>
+        <ReactInputMask
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+          id={fieldName}
+          ref={inputRef}
+          defaultValue={defaultValue}
+          {...rest}
+        />
 
-      {error && <span>{error}</span>}
+        {error && (
+          <Error title={error}>
+            <FiAlertCircle color="#c53030" size={20} />
+          </Error>
+        )}
+      </div>
     </Container>
   );
 }

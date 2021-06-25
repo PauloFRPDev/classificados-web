@@ -31,6 +31,17 @@ export const Content = styled.div`
     a {
       font-size: 1.25rem;
       color: #fff;
+
+      @media (max-width: 500px) {
+        display: none;
+      }
+    }
+
+    @media (max-width: 700px) {
+      flex: 1;
+
+      display: flex;
+      justify-content: space-between;
     }
   }
 
@@ -48,6 +59,10 @@ export const Content = styled.div`
       width: 30px;
       height: 30px;
       cursor: pointer;
+    }
+
+    @media (max-width: 700px) {
+      display: none;
     }
   }
 `;

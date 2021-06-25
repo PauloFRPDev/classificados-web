@@ -140,6 +140,16 @@ export function NewAd() {
         description,
       };
 
+      if (isSearching) {
+        addToast({
+          type: 'info',
+          title: 'Por favor aguarde',
+          description:
+            'Por favor, aguarde até o final do carregamento dos campos de Categoria, Inscrição e Nome.',
+        });
+        return;
+      }
+
       await api.post('/ads', formData);
 
       addToast({
