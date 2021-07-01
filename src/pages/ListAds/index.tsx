@@ -75,7 +75,10 @@ export function ListAds() {
                     {ad.email} - {ad.phone_number}
                   </span>
                 </div>
-                <p>{ad.parsedDate}</p>
+                <div>
+                  <p>{ad.parsedDate}</p>
+                  <p>{ad.category.title}</p>
+                </div>
               </header>
 
               <main>

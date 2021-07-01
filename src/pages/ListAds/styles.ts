@@ -63,8 +63,5 @@ export const Ad = styled.div`
       margin-bottom: 0.5rem;
       font-weight: 500;
     }
-
-    span {
-    }
   }
 `;
