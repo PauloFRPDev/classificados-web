@@ -16,7 +16,7 @@ export default function Header() {
               Início
             </Nav>
             <Nav to="/new">Novo</Nav>
-            <Nav to="pesquisa">Pesquisa</Nav>
+            <Nav to="/list">Pesquisa</Nav>
           </nav>
         </div>
 

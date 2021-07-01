@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { useField } from '@unform/core';
 import { FiAlertCircle } from 'react-icons/fi';
 import PulseLoader from 'react-spinners/PulseLoader';
+import { IconBaseProps } from 'react-icons';
 
 import { Container, Error } from './styles';
 
@@ -9,6 +10,7 @@ interface Props {
   name: string;
   label?: string;
   isSearching?: boolean;
+  icon?: React.ComponentType<IconBaseProps>;
 }
 
 type InputProps = JSX.IntrinsicElements['input'] & Props;
@@ -16,6 +18,7 @@ type InputProps = JSX.IntrinsicElements['input'] & Props;
 export function Input({
   name,
   label,
+  icon: Icon,
   isSearching,
   disabled,
   ...rest
@@ -80,6 +83,7 @@ export function Input({
             <FiAlertCircle color="#c53030" size={20} />
           </Error>
         )}
+        {Icon && <Icon size={20} />}
       </div>
 
       {isSearching && <PulseLoader size={10} speedMultiplier={0.5} />}

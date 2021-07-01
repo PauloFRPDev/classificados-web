@@ -28,7 +28,7 @@ export default createGlobalStyle`
   body {
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.4),
       rgba(0, 0, 0, 0.1)
     ),url(${backgroundImg});
     background-size: cover;

@@ -93,7 +93,7 @@ export function Home() {
             <span>Adicionar</span>
           </button>
 
-          <button type="button" onClick={() => history.push('/pesquisa')}>
+          <button type="button" onClick={() => history.push('/list')}>
             <FiList color="#fff" />
 
             <span>Pesquisar</span>
