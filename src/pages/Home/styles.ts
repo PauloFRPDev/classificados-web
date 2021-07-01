@@ -13,7 +13,6 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   h1 {
-    font-size: 2rem;
     margin-bottom: 2rem;
   }
 
@@ -55,7 +54,6 @@ export const Content = styled.div`
       }
 
       > span {
-        font-size: 1.25rem;
         border-left: 1px solid #fff;
         padding-left: 1rem;
       }
@@ -73,7 +71,7 @@ export const Content = styled.div`
 
 export const RuleSection = styled.section`
   border: 3px solid #96030f;
-  background: #fff;
+  background: #f0efef;
   border-radius: 0.5rem;
   padding: 1.25rem;
 
@@ -93,10 +91,6 @@ export const RuleSection = styled.section`
         height: 2rem;
         margin-right: 1rem;
         color: #96030f;
-      }
-
-      span {
-        font-size: 1.1rem;
       }
     }
   }

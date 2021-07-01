@@ -22,7 +22,6 @@ export const Container = styled.div<ContainerProps>`
   label {
     color: #000;
     margin-bottom: 0.25rem;
-    font-size: 1rem;
 
     ${props =>
       props.isFilled &&
@@ -51,7 +50,6 @@ export const StyledSelect = styled(ReactSelect)`
   background: transparent;
   border: 0;
   color: #333;
-  font-size: 1.1rem;
   outline: none;
 
   &::placeholder {

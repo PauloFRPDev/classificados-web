@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-import backgroundImg from '../assets/background.png';
+import backgroundImg from '../assets/background.svg';
 
 export default createGlobalStyle`
   * {
@@ -26,13 +26,11 @@ export default createGlobalStyle`
   }
 
   body {
-    /* background: #f5f5f5; */
-    /* background: url(${backgroundImg}) no-repeat center; */
     background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.9),
-    rgba(255, 255, 255, 0.2)
-  ),url(${backgroundImg});
+      to bottom,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.1)
+    ),url(${backgroundImg});
     background-size: cover;
     color: #111827;
     -webkit-font-smoothing: antialised;
@@ -46,5 +44,13 @@ export default createGlobalStyle`
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  body, input, button, textarea {
+    font: 400 1rem 'Roboto', sans-serif;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Poppins', sans-serif;
   }
 `;

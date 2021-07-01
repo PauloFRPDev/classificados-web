@@ -15,8 +15,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  /* background: #f0efef; */
-  background: #fff;
+  background: #f0efef;
   padding: 1rem 1.5rem 1.5rem;
   border: 2px solid #96030f;
   border-radius: 0.5rem;
@@ -93,7 +92,6 @@ export const ActionsContainer = styled.div`
     color: #fff;
     padding: 0.75rem 1.25rem;
     border-radius: 0.25rem;
-    font-size: 1rem;
 
     transition: background 0.2s;
 

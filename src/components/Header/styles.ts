@@ -39,7 +39,6 @@ export const Content = styled.div`
     align-items: center;
 
     span {
-      font-size: 1.25rem;
       color: #fff;
       margin-right: 1rem;
     }
@@ -61,7 +60,6 @@ export const Nav = styled(NavLink).attrs({
     background: `${darken(0.1, '#96030f')}`,
   },
 })`
-  font-size: 1.25rem;
   color: #fff;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
