@@ -8,6 +8,8 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import { InputMask } from '../../components/InputMask';
 import { Input } from '../../components/Input';
 import { TextArea } from '../../components/TextArea';
+import Select from '../../components/Select';
+import { Dropzone } from '../../components/Dropzone';
 
 import { useToast } from '../../hooks/toast';
 
@@ -21,7 +23,6 @@ import {
   FormForthLine,
   ActionsContainer,
 } from './styles';
-import Select from '../../components/Select';
 
 interface AdFormData {
   cpf: number;
@@ -330,6 +331,8 @@ export function NewAd() {
             label="Anúncio"
             // placeholder="Digite seu anúncio"
           />
+
+          <Dropzone />
 
           <ActionsContainer>
             <button type="submit">CADASTRAR</button>
