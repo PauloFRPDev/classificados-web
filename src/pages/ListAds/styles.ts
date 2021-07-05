@@ -27,15 +27,6 @@ export const AdsList = styled.div`
   gap: 1rem;
 
   padding-bottom: 2rem;
-  overflow: auto;
-  max-height: 670px;
-
-  // Hide scrollbar
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-  &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
-  }
 `;
 
 export const Ad = styled.div`
@@ -55,6 +46,10 @@ export const Ad = styled.div`
 
     > div span {
       color: #737380;
+    }
+
+    > div + div {
+      text-align: end;
     }
   }
 

@@ -10,13 +10,14 @@ interface Props extends SelectProps<OptionTypeBase> {
   placeholderText: string;
   districtSelected?: string;
 }
+
 export default function Select({
   name,
   label,
   placeholderText,
   ...rest
 }: Props) {
-  const selectRef = useRef<HTMLSelectElement>(null);
+  const selectRef = useRef<SelectProps>(null);
 
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -30,7 +31,7 @@ export default function Select({
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
 
-    setIsFilled(!!selectRef.current?.value);
+    setIsFilled(!!selectRef.current?.select.props.value);
   }, []);
 
   useEffect(() => {

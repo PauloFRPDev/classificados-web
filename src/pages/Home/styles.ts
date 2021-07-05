@@ -70,7 +70,7 @@ export const Content = styled.div`
 `;
 
 export const RuleSection = styled.section`
-  border: 3px solid #96030f;
+  border: 2px solid #96030f;
   background: #f0efef;
   border-radius: 0.5rem;
   padding: 1.25rem;
@@ -87,8 +87,8 @@ export const RuleSection = styled.section`
       align-items: center;
 
       > svg {
-        width: 2rem;
-        height: 2rem;
+        min-width: 2rem;
+        min-height: 2rem;
         margin-right: 1rem;
         color: #96030f;
       }
