@@ -1,33 +1,45 @@
-import { useCallback } from 'react';
-import { useDropzone, FileRejection } from 'react-dropzone';
-import { FiUpload } from 'react-icons/fi';
+import { useState, useEffect } from 'react';
+import { useDropzone, FileWithPath } from 'react-dropzone';
+import { FiUpload, FiX } from 'react-icons/fi';
 
-import { Container } from './styles';
+import { Container, PreviewContent } from './styles';
+
+interface FileProps extends FileWithPath {
+  preview: string;
+}
 
 export function Dropzone() {
-  const onDrop = useCallback(acceptedFiles => {
-    // Do something with the files
-    console.log(acceptedFiles);
-  }, []);
+  const [files, setFiles] = useState<FileProps[]>([]);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: acceptedFiles => {
+      if (files.length < 2) {
+        const uploadedFiles = acceptedFiles.map(file => ({
+          ...file,
+          preview: URL.createObjectURL(file),
+        }));
 
-  const handleFileRejection = ({ file, errors }: FileRejection) => {
-    console.log(errors);
-    console.log(file);
-  };
-
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    fileRejections,
-  } = useDropzone({
-    onDrop,
+        setFiles([...files, ...uploadedFiles]);
+      }
+    },
     accept: 'image/jpeg, image/jpg, image/png',
-    maxFiles: 2,
+    maxFiles: files.length === 0 ? 2 : 1,
+    disabled: files.length === 2,
   });
 
+  useEffect(
+    () => () => {
+      // Make sure to revoke the data uris to avoid memory leaks
+      files.forEach(file => URL.revokeObjectURL(file.preview));
+    },
+    [files],
+  );
+
+  const handleDeleteFilePreview = (filePreview?: string) => {
+    setFiles(files.filter(file => file.preview !== filePreview));
+  };
+
   return (
-    <Container {...getRootProps()}>
+    <Container {...getRootProps()} disabled={files.length === 2}>
       <input {...getInputProps()} />
       {isDragActive ? (
         <div>
@@ -46,6 +58,22 @@ export function Dropzone() {
             <p>( Máximo de 2 imagens )</p>
           </div>
         </div>
+      )}
+
+      {files.length > 0 && (
+        <PreviewContent>
+          {files.map(file => (
+            <div key={file.preview}>
+              <img src={file.preview} alt={file.name} />
+              <button
+                type="button"
+                onClick={() => handleDeleteFilePreview(file.preview)}
+              >
+                <FiX />
+              </button>
+            </div>
+          ))}
+        </PreviewContent>
       )}
     </Container>
   );
