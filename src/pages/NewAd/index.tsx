@@ -10,6 +10,7 @@ import { Input } from '../../components/Input';
 import { TextArea } from '../../components/TextArea';
 import Select from '../../components/Select';
 import { Dropzone } from '../../components/Dropzone';
+import { ModalComponent } from '../../components/Modal';
 
 import { useToast } from '../../hooks/toast';
 
@@ -67,6 +68,7 @@ export function NewAd() {
   const [districts, setDistricts] = useState<DistrictProps[]>([]);
   const [jurisdicted, setJurisdicted] = useState<JurisdictedData>();
   const [isSearching, setIsSearching] = useState(false);
+  const [jurisdictedInDebt, setJurisdictedInDebt] = useState(false);
 
   const { addToast } = useToast();
 
@@ -184,6 +186,8 @@ export function NewAd() {
     try {
       if (!cpf.includes('_') && cpf !== '') {
         setIsSearching(true);
+        setJurisdictedInDebt(false);
+        formRef.current?.setFieldValue('name', '');
 
         const response = await api.get('jurisdicted', {
           headers: {
@@ -197,9 +201,17 @@ export function NewAd() {
     } catch (err) {
       setIsSearching(false);
 
+      if (err.response.data.message === 'Jurisdicted is in debt') {
+        setJurisdictedInDebt(true);
+      }
+
       formRef.current?.setFieldValue(
         'name',
-        'Ops, não pudemos encontrar nenhum registro.',
+        err.response.data.message !== 'Jurisdicted is in debt'
+          ? 'Ops, não pudemos encontrar nenhum registro.'
+          : `Ops, o profissional com o CPF ${formRef.current?.getFieldValue(
+              'cpf',
+            )} possui débitos no CRO-RJ.`,
       );
       formRef.current?.setFieldValue('category', '');
       formRef.current?.setFieldValue('subscriptionNumber', '');
@@ -223,6 +235,8 @@ export function NewAd() {
 
   return (
     <Container>
+      <ModalComponent isOpen={jurisdictedInDebt} />
+
       <Content>
         <h1>Novo anúncio</h1>
 
