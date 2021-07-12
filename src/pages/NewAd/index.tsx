@@ -63,6 +63,7 @@ export function NewAd() {
   const formRef = useRef<FormHandles>(null);
 
   const [phoneInputValue, setPhoneInputValue] = useState('');
+  const [adId, setAdId] = useState('');
   const [categories, setCategories] = useState<CategoryProps[]>([]);
   const [cities, setCities] = useState<CityProps[]>([]);
   const [districts, setDistricts] = useState<DistrictProps[]>([]);
@@ -153,7 +154,11 @@ export function NewAd() {
         return;
       }
 
-      await api.post('/ads', formData);
+      const response = await api.post('/ads', formData);
+
+      const { id } = response.data;
+
+      setAdId(id);
 
       addToast({
         type: 'success',
@@ -346,7 +351,7 @@ export function NewAd() {
             // placeholder="Digite seu anúncio"
           />
 
-          <Dropzone />
+          <Dropzone adId={adId} setAdId={setAdId} />
 
           <ActionsContainer>
             <button type="submit">CADASTRAR</button>

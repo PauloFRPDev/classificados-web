@@ -2,16 +2,29 @@ import { useState, useEffect } from 'react';
 import { useDropzone, FileWithPath } from 'react-dropzone';
 import { FiUpload, FiX } from 'react-icons/fi';
 
+import api from '../../services/api';
+
 import { Container, PreviewContent } from './styles';
 
 interface FileProps extends FileWithPath {
   preview: string;
 }
 
-export function Dropzone() {
+interface DropzoneProps {
+  adId: string;
+  setAdId: (id: string) => void;
+}
+
+export function Dropzone({ adId, setAdId }: DropzoneProps) {
   const [files, setFiles] = useState<FileProps[]>([]);
+  const [formData] = useState<FormData>(new FormData());
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: acceptedFiles => {
+      acceptedFiles.forEach(file => {
+        formData.append('files', file);
+      });
+
       if (files.length < 2) {
         const uploadedFiles = acceptedFiles.map(file => ({
           ...file,
@@ -33,6 +46,23 @@ export function Dropzone() {
     },
     [files],
   );
+
+  useEffect(() => {
+    const handleInsertAdFiles = async (id: string) => {
+      if (files) {
+        await api.post(`/ads/${id}/files/add`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+      }
+
+      setFiles([]);
+    };
+
+    if (adId && files.length !== 0) {
+      handleInsertAdFiles(adId);
+      setAdId('');
+    }
+  }, [formData, files, adId, setAdId]);
 
   const handleDeleteFilePreview = (filePreview?: string) => {
     setFiles(files.filter(file => file.preview !== filePreview));
