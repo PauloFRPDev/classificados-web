@@ -58,5 +58,21 @@ export const Ad = styled.div`
       margin-bottom: 0.5rem;
       font-weight: 500;
     }
+
+    > button {
+      border: none;
+      padding: 0.3rem 0.8rem;
+      background: #96030f;
+      border-radius: 1rem;
+      color: #fff;
+      font-size: 0.8rem;
+      text-align: center;
+      margin-bottom: 0.5rem;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+    }
   }
 `;

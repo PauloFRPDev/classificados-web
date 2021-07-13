@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { MdSearch } from 'react-icons/md';
+import { FiMaximize2 } from 'react-icons/fi';
 import { format, parseISO } from 'date-fns';
 
 import api from '../../services/api';
@@ -29,6 +30,10 @@ interface AdProps {
   jurisdicted: {
     name: string;
   };
+  files: {
+    filename: string;
+    file_url: string;
+  }[];
 }
 
 export function ListAds() {
@@ -116,6 +121,14 @@ export function ListAds() {
               </header>
 
               <main>
+                {ad.files.length > 0 && (
+                  <button type="button">
+                    {ad.files.length === 1
+                      ? `${ad.files.length} imagem`
+                      : `${ad.files.length} imagens`}
+                    <FiMaximize2 />
+                  </button>
+                )}
                 <p>
                   {ad.district.title} - {ad.city.title}
                 </p>
