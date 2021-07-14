@@ -70,6 +70,10 @@ export const Content = styled.main`
     &:hover {
       background-color: rgba(0, 0, 0, 0.8);
     }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 
   > button + button {
