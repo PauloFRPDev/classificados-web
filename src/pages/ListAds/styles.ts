@@ -16,6 +16,10 @@ export const SearchHeader = styled.header`
   > form {
     display: flex;
     gap: 1rem;
+
+    @media (max-width: 750px) {
+      flex-direction: column;
+    }
   }
 
   margin-bottom: 1rem;

@@ -214,7 +214,7 @@ export function NewAd() {
         'name',
         err.response.data.message !== 'Jurisdicted is in debt'
           ? 'Ops, não pudemos encontrar nenhum registro.'
-          : `Ops, o profissional com o CPF ${formRef.current?.getFieldValue(
+          : `Ops, o(a) profissional com o CPF ${formRef.current?.getFieldValue(
               'cpf',
             )} possui débitos no CRO-RJ.`,
       );

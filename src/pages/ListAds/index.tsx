@@ -8,6 +8,7 @@ import { format, parseISO } from 'date-fns';
 import api from '../../services/api';
 
 import { Input } from '../../components/Input';
+import { Slideshow } from '../../components/Slideshow';
 
 import { Container, Content, SearchHeader, AdsList, Ad } from './styles';
 
@@ -36,6 +37,11 @@ interface AdProps {
   }[];
 }
 
+interface AdFilesProps {
+  filename: string;
+  file_url: string;
+}
+
 export function ListAds() {
   const formRef = useRef<FormHandles>(null);
 
@@ -44,6 +50,9 @@ export function ListAds() {
   const [descriptionSearched, setDescriptionSearched] = useState('');
 
   const [ads, setAds] = useState<AdProps[]>([]);
+  const [adFiles, setAdFiles] = useState<AdFilesProps[]>([]);
+
+  const [slideshowModalIsOpen, setSlideshowModalIsOpen] = useState(false);
 
   useEffect(() => {
     api
@@ -73,8 +82,18 @@ export function ListAds() {
     // TODO
   };
 
+  const handleOpenSlideshow = () => {
+    setSlideshowModalIsOpen(true);
+  };
+
   return (
     <Container>
+      <Slideshow
+        isOpen={slideshowModalIsOpen}
+        setIsOpen={setSlideshowModalIsOpen}
+        adFiles={adFiles}
+      />
+
       <Content>
         <h1>LISTAGEM DE CLASSIFICADOS</h1>
 
@@ -122,7 +141,13 @@ export function ListAds() {
 
               <main>
                 {ad.files.length > 0 && (
-                  <button type="button">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAdFiles(ad.files);
+                      handleOpenSlideshow();
+                    }}
+                  >
                     {ad.files.length === 1
                       ? `${ad.files.length} imagem`
                       : `${ad.files.length} imagens`}

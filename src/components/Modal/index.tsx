@@ -63,7 +63,7 @@ export function ModalComponent({ isOpen }: ModalProps) {
 
           <main>
             <p>
-              O profissional selecionado possui débitos no sistema.
+              O(A) profissional selecionado(a) possui débitos no sistema.
               <br /> Para visualizar e regularizar a sua situação clique no
               seguinte link:{' '}
               <a
