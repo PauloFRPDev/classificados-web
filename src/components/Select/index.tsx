@@ -11,12 +11,7 @@ interface Props extends SelectProps<OptionTypeBase> {
   districtSelected?: string;
 }
 
-export default function Select({
-  name,
-  label,
-  placeholderText,
-  ...rest
-}: Props) {
+export function Select({ name, label, placeholderText, ...rest }: Props) {
   const selectRef = useRef<SelectProps>(null);
 
   const [isFocused, setIsFocused] = useState(false);

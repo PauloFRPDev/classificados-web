@@ -17,7 +17,7 @@ interface DropzoneProps {
 
 export function Dropzone({ adId, setAdId }: DropzoneProps) {
   const [files, setFiles] = useState<FileProps[]>([]);
-  const [formData] = useState<FormData>(new FormData());
+  const [formData, setFormData] = useState<FormData>(new FormData());
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: acceptedFiles => {
@@ -61,6 +61,7 @@ export function Dropzone({ adId, setAdId }: DropzoneProps) {
     if (adId && files.length !== 0) {
       handleInsertAdFiles(adId);
       setAdId('');
+      setFormData(new FormData());
     }
   }, [formData, files, adId, setAdId]);
 
@@ -70,7 +71,7 @@ export function Dropzone({ adId, setAdId }: DropzoneProps) {
 
   return (
     <Container {...getRootProps()} disabled={files.length === 2}>
-      <input {...getInputProps()} />
+      <input type="file" name="files" {...getInputProps()} />
       {isDragActive ? (
         <div>
           <FiUpload />

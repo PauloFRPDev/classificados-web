@@ -9,6 +9,7 @@ import api from '../../services/api';
 
 import { Input } from '../../components/Input';
 import { Slideshow } from '../../components/Slideshow';
+import { Select } from '../../components/Select';
 
 import { Container, Content, SearchHeader, AdsList, Ad } from './styles';
 
@@ -42,12 +43,19 @@ interface AdFilesProps {
   file_url: string;
 }
 
+interface CategoryProps {
+  value: number;
+  label: string;
+}
+
 export function ListAds() {
   const formRef = useRef<FormHandles>(null);
 
+  const [categories, setCategories] = useState<CategoryProps[]>();
   const [citySearched, setCitySearched] = useState('');
   const [districtSearched, setDistrictSearched] = useState('');
   const [descriptionSearched, setDescriptionSearched] = useState('');
+  const [categorySearched, setCategorySearched] = useState('');
 
   const [ads, setAds] = useState<AdProps[]>([]);
   const [adFiles, setAdFiles] = useState<AdFilesProps[]>([]);
@@ -64,6 +72,7 @@ export function ListAds() {
             descriptionSearched !== ''
               ? descriptionSearched.toLowerCase()
               : null,
+          category: categorySearched,
         },
       })
       .then(response => {
@@ -76,7 +85,15 @@ export function ListAds() {
 
         setAds(parsedRetrievedAds);
       });
-  }, [citySearched, districtSearched, descriptionSearched]);
+
+    async function loadCategories(): Promise<void> {
+      const response = await api.get('categories');
+
+      setCategories(response.data);
+    }
+
+    loadCategories();
+  }, [categorySearched, citySearched, districtSearched, descriptionSearched]);
 
   const handleSearch = () => {
     // TODO
@@ -99,26 +116,37 @@ export function ListAds() {
 
         <SearchHeader>
           <Form ref={formRef} onSubmit={handleSearch}>
-            <Input
-              name="city"
-              label="Cidade"
-              value={citySearched}
-              onChange={e => setCitySearched(e.target.value)}
-              icon={MdSearch}
-            />
-            <Input
-              name="district"
-              label="Bairro"
-              value={districtSearched}
-              onChange={e => setDistrictSearched(e.target.value)}
-              icon={MdSearch}
-            />
-            <Input
-              name="description"
-              label="Descrição"
-              value={descriptionSearched}
-              onChange={e => setDescriptionSearched(e.target.value)}
-              icon={MdSearch}
+            <div>
+              <Input
+                name="city"
+                label="Cidade"
+                value={citySearched}
+                onChange={e => setCitySearched(e.target.value)}
+                icon={MdSearch}
+              />
+              <Input
+                name="district"
+                label="Bairro"
+                value={districtSearched}
+                onChange={e => setDistrictSearched(e.target.value)}
+                icon={MdSearch}
+              />
+              <Input
+                name="description"
+                label="Descrição"
+                value={descriptionSearched}
+                onChange={e => setDescriptionSearched(e.target.value)}
+                icon={MdSearch}
+              />
+            </div>
+
+            <Select
+              type="text"
+              name="category_id"
+              label="Categoria do anúncio"
+              placeholderText="Selecione a categoria"
+              options={categories}
+              onChange={option => setCategorySearched(option?.value)}
             />
           </Form>
         </SearchHeader>

@@ -1,3 +1,4 @@
+import { lighten } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -15,10 +16,18 @@ export const Content = styled.div`
 export const SearchHeader = styled.header`
   > form {
     display: flex;
+    flex-direction: column;
     gap: 1rem;
 
+    > div {
+      display: flex;
+      gap: 1rem;
+    }
+
     @media (max-width: 750px) {
-      flex-direction: column;
+      > div {
+        flex-direction: column;
+      }
     }
   }
 
@@ -72,11 +81,23 @@ export const Ad = styled.div`
       font-size: 0.8rem;
       text-align: center;
       margin-bottom: 0.5rem;
+      transition: 0.3s ease;
 
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 0.5rem;
+
+      &:hover {
+        font-size: 0.9rem;
+        background: ${lighten(0.1, '#96030f')};
+        font-weight: bold;
+
+        > svg {
+          width: 1rem;
+          height: 1rem;
+        }
+      }
     }
   }
 `;

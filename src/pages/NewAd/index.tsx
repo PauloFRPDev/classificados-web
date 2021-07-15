@@ -8,7 +8,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import { InputMask } from '../../components/InputMask';
 import { Input } from '../../components/Input';
 import { TextArea } from '../../components/TextArea';
-import Select from '../../components/Select';
+import { Select } from '../../components/Select';
 import { Dropzone } from '../../components/Dropzone';
 import { ModalComponent } from '../../components/Modal';
 
@@ -257,7 +257,6 @@ export function NewAd() {
               label="CPF"
               disabled={isSearching}
               style={isSearching ? { cursor: 'not-allowed' } : {}}
-              // placeholder="Insira seu cpf"
             />
 
             <Input
@@ -298,15 +297,9 @@ export function NewAd() {
               type="text"
               name="phone_number"
               label="Telefone com DDD"
-              // placeholder="Insira seu telefone para contato"
             />
 
-            <Input
-              type="text"
-              name="email"
-              label="E-mail"
-              // placeholder="Insira seu e-mail"
-            />
+            <Input type="text" name="email" label="E-mail" />
           </FormSecondLine>
 
           <Select
@@ -345,11 +338,7 @@ export function NewAd() {
             />
           </FormForthLine>
 
-          <TextArea
-            name="description"
-            label="Anúncio"
-            // placeholder="Digite seu anúncio"
-          />
+          <TextArea name="description" label="Anúncio" />
 
           <Dropzone adId={adId} setAdId={setAdId} />
 
