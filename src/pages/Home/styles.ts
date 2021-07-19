@@ -24,6 +24,7 @@ export const Content = styled.div`
 
     @media (max-width: 500px) {
       flex-direction: column;
+      gap: 1rem;
     }
 
     button {

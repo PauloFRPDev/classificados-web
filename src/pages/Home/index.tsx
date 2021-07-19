@@ -100,6 +100,27 @@ export function Home() {
 
               <span>Serão permitidas um máximo de 2 imagens por anúncio.</span>
             </li>
+
+            <li>
+              <FiAlertCircle />
+
+              <span>
+                Para entitular-se especialista, é necessário possuir a
+                especialização registrada junto ao CRO-RJ, caso contrário, o
+                correto é intitular-se como Clínico-Geral atuando na
+                especialidade
+              </span>
+            </li>
+
+            <li>
+              <FiAlertCircle />
+
+              <span>
+                Caso haja alguma questão sobre assuntos relativos à OFERTA DE
+                PROFISSIONAIS e OPORTUNIDADES DE EMPREGO, por favor, envie
+                e-mail para sefis@cro-rj.org.br (Fiscalização CRO-RJ).
+              </span>
+            </li>
           </ul>
         </RuleSection>
 
