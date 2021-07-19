@@ -20,6 +20,7 @@ export const Content = styled.div`
     display: flex;
     justify-content: center;
     margin-top: 2rem;
+    gap: 2rem;
 
     @media (max-width: 500px) {
       flex-direction: column;
@@ -36,12 +37,9 @@ export const Content = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 1rem;
 
       transition: background 0.2s;
-
-      &:first-child {
-        margin-right: 2rem;
-      }
 
       &:hover {
         background: ${darken(0.1, '#96030f')};
@@ -50,7 +48,6 @@ export const Content = styled.div`
       > svg {
         width: 1.5rem;
         height: 1.5rem;
-        margin-right: 1rem;
       }
 
       > span {

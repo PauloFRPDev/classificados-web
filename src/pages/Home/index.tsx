@@ -17,8 +17,8 @@ export function Home() {
               <FiAlertCircle />
 
               <span>
-                Previsão para seu anúncio ser publicado: Até 2 dias, caso esteja
-                em dia com as obrigações financeiras.
+                A previsão para seu anúncio ser publicado é de até 2 dias, caso
+                esteja em dia com as obrigações financeiras.
               </span>
             </li>
 
@@ -26,8 +26,8 @@ export function Home() {
               <FiAlertCircle />
 
               <span>
-                O anúncio ficará disponível no site por 60 dias. Após este prazo
-                expirará e será retirado.
+                O anúncio ficará disponível no site por 60 dias. Após este
+                prazo, o mesmo será retirado.
               </span>
             </li>
 
@@ -35,9 +35,9 @@ export function Home() {
               <FiAlertCircle />
 
               <span>
-                Informamos que serão publicados, todos os campos preenchidos e
-                sugerimos que o telefone e o e-mail sejam informados, para
-                minimizar falhas de comunicação.
+                Informamos que todos os campos serão publicados. Sugerimos que o
+                telefone e o e-mail sejam informados, para minimizar falhas de
+                comunicação.
               </span>
             </li>
 
@@ -45,7 +45,7 @@ export function Home() {
               <FiAlertCircle />
 
               <span>
-                Solicitamos, caso haja alguma intercorrência negativa entre
+                Solicitamos que caso haja alguma intercorrência negativa entre
                 anunciantes e anunciados, que seja comunicado de imediato a
                 Ouvidoria do CRO-RJ.
               </span>
@@ -72,16 +72,33 @@ export function Home() {
             <li>
               <FiAlertCircle />
 
-              <span>Endereço de site, blog ou similar não será publicado.</span>
+              <span>
+                Endereço de site, blog ou similar não serão publicados.
+              </span>
             </li>
 
             <li>
               <FiAlertCircle />
 
               <span>
-                Pedimos que não repita postagem do mesmo anúncio, pelo
-                formulário eletrônico, antes que seja retirado do site.
+                Anúncios com a mesma categoria não serão permitidos até que o já
+                publicado expire.
               </span>
+            </li>
+
+            <li>
+              <FiAlertCircle />
+
+              <span>
+                São permitidos o máximo de 3 anúncios (não expirados) por CPF,
+                desde que estejam em categorias diferentes.
+              </span>
+            </li>
+
+            <li>
+              <FiAlertCircle />
+
+              <span>Serão permitidas um máximo de 2 imagens por anúncio.</span>
             </li>
           </ul>
         </RuleSection>

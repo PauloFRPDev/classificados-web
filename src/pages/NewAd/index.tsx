@@ -142,6 +142,7 @@ export function NewAd() {
         city_id: Number(city_id),
         district_id: Number(district_id),
         description,
+        jurisdictedIsInDebt: jurisdictedInDebt,
       };
 
       if (isSearching) {
