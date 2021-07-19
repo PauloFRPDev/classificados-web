@@ -24,7 +24,7 @@ export const SearchHeader = styled.header`
       gap: 1rem;
     }
 
-    @media (max-width: 750px) {
+    @media (max-width: 800px) {
       > div {
         flex-direction: column;
       }
