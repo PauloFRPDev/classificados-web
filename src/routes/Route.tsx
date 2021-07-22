@@ -33,10 +33,11 @@ export default function Route({
               </>
             );
           }
+
           return <Component />;
         }
 
-        return isPrivate === !!user ? (
+        return isPrivate === !!user || !isPrivate ? (
           <RenderedComponent />
         ) : (
           <Redirect

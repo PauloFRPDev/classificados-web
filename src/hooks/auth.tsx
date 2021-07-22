@@ -44,8 +44,8 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 function AuthProvider({ children }: Props) {
   const [data, setData] = useState<AuthState>(() => {
-    const token = localStorage.getItem('@AppointmentsCro:token');
-    const user = localStorage.getItem('@AppointmentsCro:user');
+    const token = localStorage.getItem('@ClassifiedAdsCro:token');
+    const user = localStorage.getItem('@ClassifiedAdsCro:user');
 
     if (token) {
       const decoded = decode(token as string);
@@ -53,8 +53,8 @@ function AuthProvider({ children }: Props) {
       const { exp } = decoded as TokenPayload;
 
       if (!isAfter(exp * 1000, Date.now())) {
-        localStorage.removeItem('@AppointmentsCro:token');
-        localStorage.removeItem('@AppointmentsCro:user');
+        localStorage.removeItem('@ClassifiedAdsCro:token');
+        localStorage.removeItem('@ClassifiedAdsCro:user');
       }
     }
 
@@ -74,8 +74,8 @@ function AuthProvider({ children }: Props) {
 
     const { token, user } = response.data;
 
-    localStorage.setItem('@AppointmentsCro:token', token);
-    localStorage.setItem('@AppointmentsCro:user', JSON.stringify(user));
+    localStorage.setItem('@ClassifiedAdsCro:token', token);
+    localStorage.setItem('@ClassifiedAdsCro:user', JSON.stringify(user));
 
     api.defaults.headers.authorization = `Bearer ${token}`;
 
@@ -83,8 +83,8 @@ function AuthProvider({ children }: Props) {
   }, []);
 
   const signOut = useCallback(() => {
-    localStorage.removeItem('@AppointmentsCro:token');
-    localStorage.removeItem('@AppointmentsCro:user');
+    localStorage.removeItem('@ClassifiedAdsCro:token');
+    localStorage.removeItem('@ClassifiedAdsCro:user');
 
     setData({} as AuthState);
   }, []);

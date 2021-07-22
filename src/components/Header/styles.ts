@@ -93,13 +93,6 @@ export const Content = styled.div`
 
     span {
       color: #fff;
-      margin-right: 1rem;
-    }
-
-    svg {
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
     }
 
     @media (max-width: 700px) {

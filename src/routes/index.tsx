@@ -7,6 +7,7 @@ import { NewAd } from '../pages/NewAd';
 import { ListAds } from '../pages/ListAds';
 
 import { SignIn } from '../pages/Admin/SignIn';
+import { Dashboard } from '../pages/Admin/Dashboard';
 
 export function Routes() {
   return (
@@ -17,7 +18,8 @@ export function Routes() {
           <Route path="/new" component={NewAd} />
           <Route path="/list" component={ListAds} />
 
-          <Route path="/admin/signin" component={SignIn} />
+          <Route path="/admin" exact component={SignIn} />
+          <Route path="/admin/dashboard" component={Dashboard} isPrivate />
         </Switch>
       </BrowserRouter>
     </>

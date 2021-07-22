@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 
@@ -26,9 +26,16 @@ interface SignInFormData {
 export function SignIn() {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
+  const { user } = useAuth();
 
   const { signIn } = useAuth();
   const { addToast } = useToast();
+
+  useEffect(() => {
+    if (user) {
+      history.push('/admin/dashboard');
+    }
+  }, [user, history]);
 
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
