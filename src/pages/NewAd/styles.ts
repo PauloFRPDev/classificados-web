@@ -31,6 +31,16 @@ export const Content = styled.div`
   .name-jurisdicted {
     margin-bottom: 1rem;
   }
+
+  .description-area {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    > span {
+      align-self: flex-end;
+    }
+  }
 `;
 
 export const FormFirstLine = styled.div`

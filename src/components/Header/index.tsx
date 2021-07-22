@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import { FiMenu, FiUser, FiX } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import logo from '../../assets/logo.svg';
 
@@ -9,6 +9,8 @@ import { Container, Content, Nav } from './styles';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const history = useHistory();
 
   const showMenu = useCallback(() => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -38,7 +40,7 @@ export default function Header() {
         <div>
           <span>Seja bem-vindo</span>
 
-          <FiUser color="#fff" />
+          <FiUser color="#fff" onClick={() => history.push('/admin/signin')} />
         </div>
       </Content>
     </Container>

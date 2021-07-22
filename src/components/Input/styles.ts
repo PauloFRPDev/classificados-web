@@ -26,6 +26,12 @@ export const Container = styled.div<ContainerProps>`
 
   > div {
     display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > svg:first-child {
+      margin-right: 0.5rem;
+    }
   }
 
   ${props =>
@@ -92,7 +98,7 @@ export const Container = styled.div<ContainerProps>`
 
 export const Error = styled(Tooltip)`
   height: 20px;
-  margin-left: 16px;
+  margin-left: 1rem;
 
   svg {
     margin: 0;

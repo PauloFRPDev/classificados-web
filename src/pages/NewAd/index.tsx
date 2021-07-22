@@ -63,6 +63,7 @@ export function NewAd() {
   const formRef = useRef<FormHandles>(null);
 
   const [phoneInputValue, setPhoneInputValue] = useState('');
+  const [descriptionSizeValue, setDescriptionSizeValue] = useState(0);
   const [adId, setAdId] = useState('');
   const [categories, setCategories] = useState<CategoryProps[]>([]);
   const [cities, setCities] = useState<CityProps[]>([]);
@@ -339,7 +340,17 @@ export function NewAd() {
             />
           </FormForthLine>
 
-          <TextArea name="description" label="Anúncio" />
+          <div className="description-area">
+            <TextArea
+              name="description"
+              label="Anúncio"
+              maxLength={300}
+              onChange={event => {
+                setDescriptionSizeValue(event.target.value.length);
+              }}
+            />
+            <span>{300 - descriptionSizeValue} caractere(s) restante(s)</span>
+          </div>
 
           <Dropzone adId={adId} setAdId={setAdId} />
 

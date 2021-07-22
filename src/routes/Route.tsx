@@ -3,6 +3,7 @@ import {
   Route as ReactDOMRoute,
   Redirect,
 } from 'react-router-dom';
+import Header from '../components/Header';
 
 import { useAuth } from '../hooks/auth';
 
@@ -23,12 +24,24 @@ export default function Route({
     <ReactDOMRoute
       {...rest}
       render={({ location }) => {
+        function RenderedComponent() {
+          if (!location.pathname.includes('/admin')) {
+            return (
+              <>
+                <Header />
+                <Component />
+              </>
+            );
+          }
+          return <Component />;
+        }
+
         return isPrivate === !!user ? (
-          <Component />
+          <RenderedComponent />
         ) : (
           <Redirect
             to={{
-              pathname: isPrivate ? '/' : '/user/dashboard',
+              pathname: isPrivate ? '/' : '/admin/dashboard',
               state: { from: location },
             }}
           />

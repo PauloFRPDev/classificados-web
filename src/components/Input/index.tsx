@@ -68,6 +68,8 @@ export function Input({
       {label && <label htmlFor={fieldName}>{label}</label>}
 
       <div>
+        {Icon && <Icon size={20} />}
+
         <input
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
@@ -83,7 +85,6 @@ export function Input({
             <FiAlertCircle color="#c53030" size={20} />
           </Error>
         )}
-        {Icon && <Icon size={20} />}
       </div>
 
       {isSearching && <PulseLoader size={10} speedMultiplier={0.5} />}
