@@ -51,7 +51,7 @@ export function SignIn() {
           password: data.password,
         });
 
-        history.push('/user/dashboard');
+        history.push('/admin/dashboard');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
