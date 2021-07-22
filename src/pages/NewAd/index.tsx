@@ -169,6 +169,7 @@ export function NewAd() {
       });
 
       formRef.current?.reset();
+      setDescriptionSizeValue(0);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
