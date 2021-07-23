@@ -34,7 +34,12 @@ export default function Route({
             );
           }
 
-          return <Component />;
+          return (
+            <>
+              <Header isAdmin />
+              <Component />
+            </>
+          );
         }
 
         return isPrivate === !!user || !isPrivate ? (
