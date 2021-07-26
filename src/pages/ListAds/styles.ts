@@ -15,6 +15,7 @@ export const Content = styled.div`
 
   h1 {
     margin-bottom: 2rem;
+    align-self: flex-start;
   }
 `;
 

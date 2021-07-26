@@ -106,6 +106,11 @@ export const ActionsContainer = styled.div`
     transition: background 0.2s;
 
     &:first-child {
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
       &:hover {
         background: ${darken(0.08, '#96030f')};
       }

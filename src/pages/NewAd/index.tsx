@@ -70,6 +70,7 @@ export function NewAd() {
   const [districts, setDistricts] = useState<DistrictProps[]>([]);
   const [jurisdicted, setJurisdicted] = useState<JurisdictedData>();
   const [isSearching, setIsSearching] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [jurisdictedInDebt, setJurisdictedInDebt] = useState(false);
 
   const { addToast } = useToast();
@@ -105,6 +106,8 @@ export function NewAd() {
   };
 
   const handleInsertAd = async (data: AdFormData) => {
+    setIsLoading(true);
+
     try {
       formRef.current?.setErrors({});
 
@@ -168,38 +171,41 @@ export function NewAd() {
         description: 'Seu anúncio foi criado com sucesso.',
       });
 
+      setIsLoading(false);
       formRef.current?.reset();
       setDescriptionSizeValue(0);
     } catch (err) {
+      setIsLoading(false);
+
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
 
         formRef.current?.setErrors(errors);
-      }
-
-      switch (err.response.data.message) {
-        case 'You can not have more than one active or to be activated ad on the same category.':
-          addToast({
-            type: 'error',
-            title: 'Erro na criação do anúncio',
-            description:
-              'Não é possível ter mais de um anúncio na mesma categoria.',
-          });
-          break;
-        case 'You can not have more than three active ads.':
-          addToast({
-            type: 'error',
-            title: 'Erro na criação do anúncio',
-            description: 'Não é possível ter mais de três anúncios ativos.',
-          });
-          break;
-        default:
-          addToast({
-            type: 'error',
-            title: 'Erro na criação do anúncio',
-            description:
-              'Houve um erro ao tentar inserir um anúncio, por favor tente novamente.',
-          });
+      } else {
+        switch (err.response.data.message) {
+          case 'You can not have more than one active or to be activated ad on the same category.':
+            addToast({
+              type: 'error',
+              title: 'Erro na criação do anúncio',
+              description:
+                'Não é possível ter mais de um anúncio na mesma categoria.',
+            });
+            break;
+          case 'You can not have more than three active ads.':
+            addToast({
+              type: 'error',
+              title: 'Erro na criação do anúncio',
+              description: 'Não é possível ter mais de três anúncios ativos.',
+            });
+            break;
+          default:
+            addToast({
+              type: 'error',
+              title: 'Erro na criação do anúncio',
+              description:
+                'Houve um erro ao tentar inserir um anúncio, por favor tente novamente.',
+            });
+        }
       }
     }
   };
@@ -374,7 +380,9 @@ export function NewAd() {
           <Dropzone adId={adId} setAdId={setAdId} />
 
           <ActionsContainer>
-            <button type="submit">CADASTRAR</button>
+            <button type="submit" disabled={isLoading}>
+              CADASTRAR
+            </button>
 
             <button type="button" onClick={handleCleanFields}>
               LIMPAR
