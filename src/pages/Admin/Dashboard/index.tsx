@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { BarGraphic } from './BarGraphic';
 import { LineGraphic } from './LineGraphic';
 
+import api from '../../../services/api';
+
 import { Container, Content, Statistics } from './styles';
 
 interface AdsStatistics {
@@ -16,6 +18,10 @@ export function Dashboard() {
 
   useEffect(() => {
     async function getAdsStatistics() {
+      const response = await api.get('/statistics/ads/total');
+
+      const adsPerMonth = response.data;
+
       setAdsStatistics({
         months: [
           'Janeiro',
@@ -31,7 +37,7 @@ export function Dashboard() {
           'Novembro',
           'Dezembro',
         ],
-        numberOfAds: [5, 10, 8, 15, 25, 40, 30, 2, 7, 24, 23, 10],
+        numberOfAds: adsPerMonth,
       });
     }
 
