@@ -2,8 +2,9 @@ import { useEffect, useState, useRef } from 'react';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { MdSearch } from 'react-icons/md';
-import { FiMaximize2 } from 'react-icons/fi';
+import { FiFrown, FiMaximize2 } from 'react-icons/fi';
 import { format, parseISO } from 'date-fns';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 import api from '../../services/api';
 
@@ -61,10 +62,13 @@ export function ListAds() {
   const [adFiles, setAdFiles] = useState<AdFilesProps[]>([]);
 
   const [slideshowModalIsOpen, setSlideshowModalIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    api
-      .get('/ads', {
+    async function loadAds(): Promise<void> {
+      setIsLoading(true);
+
+      const response = await api.get('/ads', {
         params: {
           city: citySearched.toLowerCase(),
           district: districtSearched.toLowerCase(),
@@ -74,24 +78,28 @@ export function ListAds() {
               : null,
           category: categorySearched,
         },
-      })
-      .then(response => {
-        const retrievedAds = response.data;
-
-        const parsedRetrievedAds = retrievedAds.map((retrievedAd: AdProps) => ({
-          ...retrievedAd,
-          parsedDate: format(parseISO(retrievedAd.created_at), 'dd-MM-yyyy'),
-        }));
-
-        setAds(parsedRetrievedAds);
       });
+
+      const retrievedAds = response.data;
+
+      const parsedRetrievedAds = retrievedAds.map((retrievedAd: AdProps) => ({
+        ...retrievedAd,
+        parsedDate: format(parseISO(retrievedAd.created_at), 'dd-MM-yyyy'),
+      }));
+
+      setIsLoading(false);
+      setAds(parsedRetrievedAds);
+    }
 
     async function loadCategories(): Promise<void> {
       const response = await api.get('categories');
 
       setCategories(response.data);
+
+      setIsLoading(false);
     }
 
+    loadAds();
     loadCategories();
   }, [categorySearched, citySearched, districtSearched, descriptionSearched]);
 
@@ -151,45 +159,56 @@ export function ListAds() {
           </Form>
         </SearchHeader>
 
-        <AdsList>
-          {ads.map(ad => (
-            <Ad key={ad.id}>
-              <header>
-                <div>
-                  <h3>{ad.jurisdicted.name}</h3>
-                  <span>
-                    {ad.email} - {ad.phone_number}
-                  </span>
-                </div>
-                <div>
-                  <p>{ad.parsedDate}</p>
-                  <p>{ad.category.title}</p>
-                </div>
-              </header>
+        {isLoading ? (
+          <ClipLoader />
+        ) : (
+          <AdsList>
+            {ads.length !== 0 ? (
+              ads.map(ad => (
+                <Ad key={ad.id}>
+                  <header>
+                    <div>
+                      <h3>{ad.jurisdicted.name}</h3>
+                      <span>
+                        {ad.email} - {ad.phone_number}
+                      </span>
+                    </div>
+                    <div>
+                      <p>{ad.parsedDate}</p>
+                      <p>{ad.category.title}</p>
+                    </div>
+                  </header>
 
-              <main>
-                {ad.files.length > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAdFiles(ad.files);
-                      handleOpenSlideshow();
-                    }}
-                  >
-                    {ad.files.length === 1
-                      ? `${ad.files.length} imagem`
-                      : `${ad.files.length} imagens`}
-                    <FiMaximize2 />
-                  </button>
-                )}
-                <p>
-                  {ad.district.title} - {ad.city.title}
-                </p>
-                <span>{ad.description}</span>
-              </main>
-            </Ad>
-          ))}
-        </AdsList>
+                  <main>
+                    {ad.files.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setAdFiles(ad.files);
+                          handleOpenSlideshow();
+                        }}
+                      >
+                        {ad.files.length === 1
+                          ? `${ad.files.length} imagem`
+                          : `${ad.files.length} imagens`}
+                        <FiMaximize2 />
+                      </button>
+                    )}
+                    <p>
+                      {ad.district.title} - {ad.city.title}
+                    </p>
+                    <span>{ad.description}</span>
+                  </main>
+                </Ad>
+              ))
+            ) : (
+              <div className="adsNotFound">
+                <FiFrown />
+                <span>Desculpe, não foi possível encontrar nenhum anúncio</span>
+              </div>
+            )}
+          </AdsList>
+        )}
       </Content>
     </Container>
   );

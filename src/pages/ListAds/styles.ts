@@ -8,12 +8,19 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   h1 {
     margin-bottom: 2rem;
   }
 `;
 
 export const SearchHeader = styled.header`
+  width: 100%;
+
   > form {
     display: flex;
     flex-direction: column;
@@ -40,9 +47,29 @@ export const AdsList = styled.div`
   gap: 1rem;
 
   padding-bottom: 2rem;
+
+  > div.adsNotFound {
+    margin-top: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    > svg {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    span {
+      font-size: 1.5rem;
+    }
+  }
 `;
 
 export const Ad = styled.div`
+  width: 100%;
   background: #f0efef;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;

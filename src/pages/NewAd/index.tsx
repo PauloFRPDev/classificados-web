@@ -177,12 +177,30 @@ export function NewAd() {
         formRef.current?.setErrors(errors);
       }
 
-      addToast({
-        type: 'error',
-        title: 'Erro na criação do anúncio',
-        description:
-          'Houve um erro ao tentar inserir um anúncio, por favor tente novamente.',
-      });
+      switch (err.response.data.message) {
+        case 'You can not have more than one active or to be activated ad on the same category.':
+          addToast({
+            type: 'error',
+            title: 'Erro na criação do anúncio',
+            description:
+              'Não é possível ter mais de um anúncio na mesma categoria.',
+          });
+          break;
+        case 'You can not have more than three active ads.':
+          addToast({
+            type: 'error',
+            title: 'Erro na criação do anúncio',
+            description: 'Não é possível ter mais de três anúncios ativos.',
+          });
+          break;
+        default:
+          addToast({
+            type: 'error',
+            title: 'Erro na criação do anúncio',
+            description:
+              'Houve um erro ao tentar inserir um anúncio, por favor tente novamente.',
+          });
+      }
     }
   };
 
