@@ -90,8 +90,25 @@ export const Content = styled.div`
   div:last-child {
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 1rem;
 
     span {
+      color: #fff;
+    }
+
+    > button {
+      border: none;
+      background: none;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    > button svg {
+      width: 1.2rem;
+      height: 1.2rem;
       color: #fff;
     }
 

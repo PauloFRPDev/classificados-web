@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react';
-
-import { FiMenu, FiX } from 'react-icons/fi';
+import { FiLogOut, FiMenu, FiX } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+
+import { useAuth } from '../../hooks/auth';
 
 import logo from '../../assets/logo.svg';
 
@@ -13,6 +14,8 @@ interface HeaderProps {
 
 export default function Header({ isAdmin }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const { signOut } = useAuth();
 
   const showMenu = useCallback(() => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -50,6 +53,11 @@ export default function Header({ isAdmin }: HeaderProps) {
 
         <div>
           <span>Seja bem-vindo</span>
+          {isAdmin && (
+            <button type="button" onClick={signOut}>
+              <FiLogOut />
+            </button>
+          )}
         </div>
       </Content>
     </Container>

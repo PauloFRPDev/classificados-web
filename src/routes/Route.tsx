@@ -36,7 +36,7 @@ export default function Route({
 
           return (
             <>
-              <Header isAdmin />
+              {user && <Header isAdmin />}
               <Component />
             </>
           );
