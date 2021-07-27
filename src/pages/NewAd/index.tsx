@@ -121,7 +121,9 @@ export function NewAd() {
         email: Yup.string()
           .required('E-mail obrigatório')
           .email('Digite um e-mail válido'),
-        description: Yup.string().required('Anúncio obrigatório'),
+        description: Yup.string()
+          .min(10, 'Descrição deve ter pelo menos 10 caracteres')
+          .required('Anúncio obrigatório'),
       });
 
       await schema.validate(data, {
