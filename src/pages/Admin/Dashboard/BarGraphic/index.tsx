@@ -25,26 +25,27 @@ interface ChartOption {
   };
 }
 
-export function BarGraphic() {
+interface BarGraphicProps {
+  adsStatistics: {
+    category: string;
+    count: number;
+  }[];
+}
+
+export function BarGraphic({ adsStatistics }: BarGraphicProps) {
   const [barData, setBarData] = useState<ChartData>();
   const [barOptions, setBarOptions] = useState<ChartOption>();
 
   useEffect(() => {
+    const categories = adsStatistics.map(adStatistic => adStatistic.category);
+    const counts = adsStatistics.map(adStatistics => adStatistics.count);
+
     setBarData({
-      labels: [
-        'Aluguel - Horário',
-        'Aluguel - Mensal',
-        'Oferta de Profissionais',
-        'Oportunidades de Emprego',
-        'Venda - Sala, consultório e clínica',
-        'Equipamentos - compra',
-        'Equipamentos - venda',
-        'Equipamentos - doações',
-      ],
+      labels: categories,
       datasets: [
         {
           label: 'Quantidade de anúncios por categoria',
-          data: [5, 10, 8, 15, 25, 40, 30, 2],
+          data: counts,
           fill: false,
           backgroundColor: '#96030fCC',
           borderColor: '#96030f',
@@ -63,7 +64,7 @@ export function BarGraphic() {
         ],
       },
     });
-  }, []);
+  }, [adsStatistics]);
 
   return (
     <Container>

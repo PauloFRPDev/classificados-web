@@ -6,23 +6,32 @@ import api from '../../../services/api';
 
 import { Container, Content, Statistics } from './styles';
 
-interface AdsStatistics {
+interface AdsPerMonthStatistics {
   months: string[];
   numberOfAds: number[];
 }
 
+interface AdsPerCategoryStatistics {
+  category: string;
+  count: number;
+}
+
 export function Dashboard() {
-  const [adsStatistics, setAdsStatistics] = useState<AdsStatistics>(
-    {} as AdsStatistics,
-  );
+  const [
+    adsPerMonthStatistics,
+    setAdsPerMonthStatistics,
+  ] = useState<AdsPerMonthStatistics>({} as AdsPerMonthStatistics);
+  const [adsPerCategoryStatistics, setAdsPerCategoryStatistics] = useState<
+    AdsPerCategoryStatistics[]
+  >([] as AdsPerCategoryStatistics[]);
 
   useEffect(() => {
-    async function getAdsStatistics() {
+    async function getAdsPerMonthStatistics() {
       const response = await api.get('/statistics/ads/total');
 
       const adsPerMonth = response.data;
 
-      setAdsStatistics({
+      setAdsPerMonthStatistics({
         months: [
           'Janeiro',
           'Fevereiro',
@@ -41,7 +50,19 @@ export function Dashboard() {
       });
     }
 
-    getAdsStatistics();
+    getAdsPerMonthStatistics();
+  }, []);
+
+  useEffect(() => {
+    async function getAdsPerCategoryStatistics() {
+      const response = await api.get('/statistics/ads/total_category');
+
+      const adsPerCategory = response.data;
+
+      setAdsPerCategoryStatistics(adsPerCategory);
+    }
+
+    getAdsPerCategoryStatistics();
   }, []);
 
   return (
@@ -52,8 +73,8 @@ export function Dashboard() {
         </header>
 
         <Statistics>
-          <LineGraphic adsStatistics={adsStatistics} />
-          <BarGraphic />
+          <LineGraphic adsStatistics={adsPerMonthStatistics} />
+          <BarGraphic adsStatistics={adsPerCategoryStatistics} />
         </Statistics>
       </Content>
     </Container>
