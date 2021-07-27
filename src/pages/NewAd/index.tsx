@@ -323,7 +323,7 @@ export function NewAd() {
               onChange={handlePhoneChange}
               type="text"
               name="phone_number"
-              label="Telefone com DDD"
+              label="Celular com DDD"
             />
 
             <Input type="text" name="email" label="E-mail" />

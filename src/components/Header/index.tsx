@@ -34,7 +34,7 @@ export default function Header({ isAdmin }: HeaderProps) {
               <Nav to="/admin/dashboard" exact>
                 Início
               </Nav>
-              <Nav to="/admin/accept">Liberar anúncios</Nav>
+              <Nav to="/admin/accept_ads">Liberar anúncios</Nav>
             </nav>
           ) : (
             <nav className={`${mobileMenuOpen ? 'visible' : 'hidden'}`}>

@@ -110,6 +110,11 @@ export const Content = styled.div`
       width: 1.2rem;
       height: 1.2rem;
       color: #fff;
+      transition: 0.3s ease;
+
+      &:hover {
+        color: ${darken(0.4, '#fff')};
+      }
     }
 
     @media (max-width: 700px) {

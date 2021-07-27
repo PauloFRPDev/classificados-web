@@ -8,6 +8,7 @@ import { ListAds } from '../pages/ListAds';
 
 import { SignIn } from '../pages/Admin/SignIn';
 import { Dashboard } from '../pages/Admin/Dashboard';
+import { AcceptAds } from '../pages/Admin/AcceptAds';
 
 export function Routes() {
   return (
@@ -20,6 +21,7 @@ export function Routes() {
 
           <Route path="/admin" exact component={SignIn} />
           <Route path="/admin/dashboard" component={Dashboard} isPrivate />
+          <Route path="/admin/accept_ads" component={AcceptAds} isPrivate />
         </Switch>
       </BrowserRouter>
     </>

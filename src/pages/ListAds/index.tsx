@@ -84,7 +84,7 @@ export function ListAds() {
 
       const parsedRetrievedAds = retrievedAds.map((retrievedAd: AdProps) => ({
         ...retrievedAd,
-        parsedDate: format(parseISO(retrievedAd.created_at), 'dd-MM-yyyy'),
+        parsedDate: format(parseISO(retrievedAd.created_at), 'dd/MM/yyyy'),
       }));
 
       setIsLoading(false);
