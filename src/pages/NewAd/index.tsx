@@ -72,6 +72,7 @@ export function NewAd() {
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [jurisdictedInDebt, setJurisdictedInDebt] = useState(false);
+  const [cellphoneInputMask, setCellphoneInputMask] = useState('');
 
   const { addToast } = useToast();
 
@@ -214,11 +215,15 @@ export function NewAd() {
 
   const handlePhoneChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPhoneInputValue(event.target.value);
+
+    if (event.target.value.length >= 3 && event.target.value.length <= 14) {
+      setCellphoneInputMask('(99) 9999-9999');
+    }
   };
 
   const handleSearchJurisdicted = async (cpf: string) => {
     try {
-      if (!cpf.includes('_') && cpf !== '') {
+      if (cpf.length === 14) {
         setIsSearching(true);
         setJurisdictedInDebt(false);
         formRef.current?.setFieldValue('name', '');
@@ -317,11 +322,7 @@ export function NewAd() {
 
           <FormSecondLine>
             <InputMask
-              mask={
-                phoneInputValue.length === 14
-                  ? '(99) 9999-9999'
-                  : '(99) 99999-9999'
-              }
+              mask={cellphoneInputMask}
               onChange={handlePhoneChange}
               type="text"
               name="phone_number"

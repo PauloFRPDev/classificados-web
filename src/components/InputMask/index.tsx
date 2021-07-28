@@ -10,8 +10,10 @@ interface Props extends InputMaskProps {
   label?: string;
 }
 
+interface InputMaskRef extends ReactInputMask, HTMLInputElement {}
+
 export function InputMask({ name, label, ...rest }: Props) {
-  const inputRef = useRef<ReactInputMask>(null);
+  const inputRef = useRef<InputMaskRef>(null);
 
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -25,7 +27,7 @@ export function InputMask({ name, label, ...rest }: Props) {
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
 
-    setIsFilled(!!inputRef.current?.props.value);
+    setIsFilled(!!inputRef.current?.value);
   }, []);
 
   useEffect(() => {
@@ -55,6 +57,7 @@ export function InputMask({ name, label, ...rest }: Props) {
           id={fieldName}
           ref={inputRef}
           defaultValue={defaultValue}
+          maskPlaceholder={null}
           {...rest}
         />
 
