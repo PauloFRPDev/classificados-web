@@ -1,10 +1,68 @@
 import styled from 'styled-components';
-import { lighten } from 'polished';
+import { darken, lighten } from 'polished';
 
 export const Container = styled.div`
   max-width: 1120px;
   margin: 0 auto;
   padding: 2rem;
+`;
+
+export const ModalContainer = styled.div`
+  header {
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .description-area {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    margin-bottom: 2rem;
+
+    > div {
+      min-width: 500px;
+    }
+
+    > span {
+      align-self: flex-end;
+    }
+  }
+
+  footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+
+    button + button {
+      color: #111827;
+      background: none;
+      border: 1px solid #96030f;
+
+      transition: color 0.3s ease;
+    }
+
+    button + button:hover {
+      color: ${darken(0.05, '#fff')};
+    }
+
+    > button {
+      border: none;
+      background: #96030f;
+      color: #fff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.25rem;
+
+      transition: background 0.3s ease;
+
+      &:first-child {
+        &:hover {
+          background: ${darken(0.08, '#96030f')};
+        }
+      }
+    }
+  }
 `;
 
 export const Content = styled.div`

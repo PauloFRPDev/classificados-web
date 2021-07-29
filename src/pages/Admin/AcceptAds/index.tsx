@@ -1,14 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { format, parseISO } from 'date-fns';
-import { FiCheck, FiFrown, FiMaximize2, FiTrash } from 'react-icons/fi';
+import { Form } from '@unform/web';
+import {
+  FiCheck,
+  FiEdit2,
+  FiFrown,
+  FiMaximize2,
+  FiTrash,
+} from 'react-icons/fi';
 import { ClipLoader } from 'react-spinners';
+import * as Yup from 'yup';
 
+import { FormHandles } from '@unform/core';
 import api from '../../../services/api';
 import { useToast } from '../../../hooks/toast';
 
 import { Slideshow } from '../../../components/Slideshow';
+import { ModalComponent } from '../../../components/Modal';
+import { TextArea } from '../../../components/TextArea';
 
-import { Container, Content, AdsList, Ad, Footer, Actions } from './styles';
+import {
+  Container,
+  ModalContainer,
+  Content,
+  AdsList,
+  Ad,
+  Footer,
+  Actions,
+} from './styles';
 
 interface AdProps {
   id: string;
@@ -40,11 +59,20 @@ interface AdFilesProps {
   file_url: string;
 }
 
+interface EditAdFormData {
+  description: string;
+}
+
 export function AcceptAds() {
+  const formRef = useRef<FormHandles>(null);
+
   const [ads, setAds] = useState<AdProps[]>([]);
   const [adFiles, setAdFiles] = useState<AdFilesProps[]>([]);
+  const [editingAd, setEditingAd] = useState<AdProps>();
+  const [descriptionSizeValue, setDescriptionSizeValue] = useState(0);
 
   const [slideshowModalIsOpen, setSlideshowModalIsOpen] = useState(false);
+  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const { addToast } = useToast();
@@ -94,6 +122,11 @@ export function AcceptAds() {
     }
   };
 
+  const handleEditAd = (ad: AdProps) => {
+    setEditingAd(ad);
+    setEditModalIsOpen(true);
+  };
+
   const handleDeleteAd = async (adId: string) => {
     try {
       await api.delete(`/ads/${adId}`);
@@ -115,6 +148,43 @@ export function AcceptAds() {
     }
   };
 
+  const handleEditSubmit = async (data: EditAdFormData) => {
+    try {
+      formRef.current?.setErrors({});
+
+      const schema = Yup.object().shape({
+        description: Yup.string()
+          .min(10, 'Descrição deve ter pelo menos 10 caracteres')
+          .required('Anúncio obrigatório'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      const { description } = data;
+
+      const formData = {
+        description,
+      };
+
+      await api.put(`/ads/${editingAd?.id}`, formData);
+
+      addToast({
+        type: 'success',
+        title: 'Anúncio editado com sucesso.',
+        description: 'O anúncio foi editado com sucesso.',
+      });
+    } catch (err) {
+      addToast({
+        type: 'error',
+        title: 'Erro ao editar o anúncio.',
+        description:
+          'Ocorreu um erro ao editar o anúncio, favor tentar novamente.',
+      });
+    }
+  };
+
   return (
     <Container>
       <Slideshow
@@ -122,6 +192,50 @@ export function AcceptAds() {
         setIsOpen={setSlideshowModalIsOpen}
         adFiles={adFiles}
       />
+
+      {editingAd && (
+        <ModalComponent isOpen={editModalIsOpen} setIsOpen={setEditModalIsOpen}>
+          <ModalContainer>
+            <header>
+              <h3>{editingAd.jurisdicted.name}</h3>
+            </header>
+
+            <main>
+              <Form
+                ref={formRef}
+                onSubmit={handleEditSubmit}
+                initialData={{ description: editingAd.description }}
+              >
+                <div className="description-area">
+                  <TextArea
+                    name="description"
+                    label="Anúncio"
+                    maxLength={300}
+                    onChange={event => {
+                      setDescriptionSizeValue(event.target.value.length);
+                    }}
+                  />
+                  <span>
+                    {300 - descriptionSizeValue} caractere(s) restante(s)
+                  </span>
+                </div>
+
+                <footer>
+                  <button type="submit">Alterar</button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditModalIsOpen(false);
+                    }}
+                  >
+                    Cancelar
+                  </button>
+                </footer>
+              </Form>
+            </main>
+          </ModalContainer>
+        </ModalComponent>
+      )}
 
       <Content>
         <h1>Anúncios pendentes</h1>
@@ -176,6 +290,11 @@ export function AcceptAds() {
                         >
                           <FiCheck />
                         </button>
+
+                        <button type="button" onClick={() => handleEditAd(ad)}>
+                          <FiEdit2 />
+                        </button>
+
                         <button
                           type="button"
                           onClick={() => handleDeleteAd(ad.id)}

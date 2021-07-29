@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ReactNode } from 'react';
 
 import Modal from 'react-modal';
-
-import { Container } from './styles';
 
 const customStyles = {
   content: {
@@ -25,11 +23,13 @@ const customStyles = {
 
 interface ModalProps {
   isOpen: boolean;
+  children: ReactNode;
+  setIsOpen?: (modalIsOpen: boolean) => void;
 }
 
 Modal.setAppElement('#root');
 
-export function ModalComponent({ isOpen }: ModalProps) {
+export function ModalComponent({ isOpen, setIsOpen, children }: ModalProps) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   // function openModal() {
@@ -42,6 +42,9 @@ export function ModalComponent({ isOpen }: ModalProps) {
 
   function closeModal() {
     setModalIsOpen(false);
+    if (setIsOpen) {
+      setIsOpen(false);
+    }
   }
 
   useEffect(() => {
@@ -56,33 +59,7 @@ export function ModalComponent({ isOpen }: ModalProps) {
         onRequestClose={closeModal}
         style={customStyles}
       >
-        <Container>
-          <header>
-            <h3>ATENÇÃO!</h3>
-          </header>
-
-          <main>
-            <p>
-              O(A) profissional selecionado(a) possui débitos no sistema.
-              <br /> Para visualizar e regularizar a sua situação clique no
-              seguinte link:{' '}
-              <a
-                href="https://cro-rj.implanta.net.br/servicosonline/"
-                target="blank"
-              >
-                https://cro-rj.implanta.net.br/servicosonline/
-              </a>
-            </p>
-          </main>
-
-          <footer>
-            <p>
-              Já regularizou e ainda não consegue inserir um anúncio?
-              <br /> Favor entrar em contato através do endereço de e-mail{' '}
-              <strong>suporte@cro-rj.org.br</strong>
-            </p>
-          </footer>
-        </Container>
+        {children}
       </Modal>
     </div>
   );

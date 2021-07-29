@@ -18,6 +18,7 @@ import api from '../../services/api';
 
 import {
   Container,
+  ModalContainer,
   Content,
   FormFirstLine,
   FormSecondLine,
@@ -117,7 +118,9 @@ export function NewAd() {
         subscriptionNumber: Yup.string().required(
           'Número de inscrição obrigatório',
         ),
-        phone_number: Yup.string().required('Telefone obrigatório'),
+        phone_number: Yup.string()
+          .min(14, 'Favor inserir um número de telefone válido')
+          .required('Telefone obrigatório'),
         email: Yup.string()
           .required('E-mail obrigatório')
           .email('Digite um e-mail válido'),
@@ -174,7 +177,7 @@ export function NewAd() {
       });
 
       setIsLoading(false);
-      formRef.current?.reset();
+      // formRef.current?.reset();
       setDescriptionSizeValue(0);
     } catch (err) {
       setIsLoading(false);
@@ -275,7 +278,35 @@ export function NewAd() {
 
   return (
     <Container>
-      <ModalComponent isOpen={jurisdictedInDebt} />
+      <ModalComponent isOpen={jurisdictedInDebt}>
+        <ModalContainer>
+          <header>
+            <h3>ATENÇÃO!</h3>
+          </header>
+
+          <main>
+            <p>
+              O(A) profissional selecionado(a) possui débitos no sistema.
+              <br /> Para visualizar e regularizar a sua situação clique no
+              seguinte link:{' '}
+              <a
+                href="https://cro-rj.implanta.net.br/servicosonline/"
+                target="blank"
+              >
+                https://cro-rj.implanta.net.br/servicosonline/
+              </a>
+            </p>
+          </main>
+
+          <footer>
+            <p>
+              Já regularizou e ainda não consegue inserir um anúncio?
+              <br /> Favor entrar em contato através do endereço de e-mail{' '}
+              <strong>suporte@cro-rj.org.br</strong>
+            </p>
+          </footer>
+        </ModalContainer>
+      </ModalComponent>
 
       <Content>
         <h1>Novo anúncio</h1>
