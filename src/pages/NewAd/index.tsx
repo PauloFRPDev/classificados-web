@@ -62,7 +62,6 @@ interface DistrictProps {
 export function NewAd() {
   const formRef = useRef<FormHandles>(null);
 
-  const [phoneInputValue, setPhoneInputValue] = useState('');
   const [descriptionSizeValue, setDescriptionSizeValue] = useState(0);
   const [adId, setAdId] = useState('');
   const [categories, setCategories] = useState<CategoryProps[]>([]);
@@ -214,10 +213,12 @@ export function NewAd() {
   };
 
   const handlePhoneChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPhoneInputValue(event.target.value);
-
     if (event.target.value.length >= 3 && event.target.value.length <= 14) {
       setCellphoneInputMask('(99) 9999-9999');
+    }
+
+    if (event.target.value.length === 15) {
+      setCellphoneInputMask('(99) 99999-9999');
     }
   };
 
@@ -323,6 +324,12 @@ export function NewAd() {
           <FormSecondLine>
             <InputMask
               mask={cellphoneInputMask}
+              onKeyDown={e => {
+                if (e.currentTarget.value.length === 14) {
+                  setCellphoneInputMask('(99) 99999-9999');
+                }
+              }}
+              onBlur={handlePhoneChange}
               onChange={handlePhoneChange}
               type="text"
               name="phone_number"
