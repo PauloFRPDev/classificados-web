@@ -16,7 +16,7 @@ export const Container = styled.div<ContainerProps>`
   flex: 1;
 
   background: #fff;
-  padding: 0.5rem 0.25rem;
+  padding: 0.5rem 0.5rem;
   border-radius: 0.5rem;
 
   border: 1px solid #96030f;

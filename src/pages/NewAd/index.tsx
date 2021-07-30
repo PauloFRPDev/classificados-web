@@ -106,6 +106,13 @@ export function NewAd() {
     setDistricts(response.data);
   };
 
+  const handleCleanFields = () => {
+    formRef.current?.reset();
+    formRef.current?.getFieldRef('category_id').select.clearValue();
+    formRef.current?.getFieldRef('city_id').select.clearValue();
+    formRef.current?.getFieldRef('district_id').select.clearValue();
+  };
+
   const handleInsertAd = async (data: AdFormData) => {
     setIsLoading(true);
 
@@ -124,6 +131,9 @@ export function NewAd() {
         email: Yup.string()
           .required('E-mail obrigatório')
           .email('Digite um e-mail válido'),
+        category_id: Yup.string().required('Categoria do anúncio obrigatória'),
+        city_id: Yup.string().required('Cidade obrigatória'),
+        district_id: Yup.string().required('Bairro obrigatório'),
         description: Yup.string()
           .min(10, 'Descrição deve ter pelo menos 10 caracteres')
           .required('Anúncio obrigatório'),
@@ -177,7 +187,7 @@ export function NewAd() {
       });
 
       setIsLoading(false);
-      // formRef.current?.reset();
+      handleCleanFields();
       setDescriptionSizeValue(0);
     } catch (err) {
       setIsLoading(false);
@@ -259,10 +269,6 @@ export function NewAd() {
       formRef.current?.setFieldValue('category', '');
       formRef.current?.setFieldValue('subscriptionNumber', '');
     }
-  };
-
-  const handleCleanFields = () => {
-    formRef.current?.reset();
   };
 
   useEffect(() => {

@@ -168,13 +168,28 @@ export function AcceptAds() {
         description,
       };
 
-      await api.put(`/ads/${editingAd?.id}`, formData);
+      const response = await api.put(`/ads/${editingAd?.id}`, formData);
+
+      const adsUpdated = ads.map(ad => {
+        if (ad.id === response.data.id) {
+          return {
+            ...ad,
+            description: response.data.description,
+          };
+        }
+
+        return ad;
+      });
+
+      setAds(adsUpdated);
 
       addToast({
         type: 'success',
         title: 'Anúncio editado com sucesso.',
         description: 'O anúncio foi editado com sucesso.',
       });
+
+      setEditModalIsOpen(false);
     } catch (err) {
       addToast({
         type: 'error',

@@ -37,11 +37,11 @@ export function InputMask({ name, label, ...rest }: Props) {
       path: 'value',
       setValue: (ref, value) => {
         // eslint-disable-next-line no-param-reassign
-        ref.setInputValue(value);
+        ref.value = value;
       },
       clearValue: ref => {
         // eslint-disable-next-line no-param-reassign
-        ref.setInputValue('');
+        ref.value = '';
       },
     });
   }, [fieldName, registerField]);

@@ -46,6 +46,15 @@ export function Select({ name, label, placeholderText, ...rest }: Props) {
         }
         return ref.state.value.value;
       },
+      setValue: (ref, value) => {
+        // eslint-disable-next-line no-param-reassign
+        ref.value = value;
+      },
+      clearValue: ref => {
+        // eslint-disable-next-line no-param-reassign
+        ref.value = null;
+        setIsFilled(false);
+      },
     });
   }, [fieldName, registerField, rest.isMulti]);
 
