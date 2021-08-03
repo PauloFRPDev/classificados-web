@@ -23,6 +23,7 @@ export const Container = styled.div<ContainerProps>`
 
   > div {
     display: flex;
+    align-items: center;
   }
 
   label {
