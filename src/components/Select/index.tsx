@@ -2,7 +2,8 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { OptionTypeBase, Props as SelectProps } from 'react-select';
 import { useField } from '@unform/core';
 
-import { Container, StyledSelect } from './styles';
+import { FiAlertCircle } from 'react-icons/fi';
+import { Container, StyledSelect, Error } from './styles';
 
 interface Props extends SelectProps<OptionTypeBase> {
   name: string;
@@ -62,18 +63,24 @@ export function Select({ name, label, placeholderText, ...rest }: Props) {
     <Container isFilled={isFilled} isFocused={isFocused}>
       {label && <label htmlFor={fieldName}>{label}</label>}
 
-      <StyledSelect
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        defaultValue={defaultValue}
-        ref={selectRef}
-        classNamePrefix="react-select"
-        placeholder={placeholderText}
-        noOptionsMessage={() => 'Ops! Nenhuma opção encontrada'}
-        {...rest}
-      />
+      <div>
+        <StyledSelect
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+          defaultValue={defaultValue}
+          ref={selectRef}
+          classNamePrefix="react-select"
+          placeholder={placeholderText}
+          noOptionsMessage={() => 'Ops! Nenhuma opção encontrada'}
+          {...rest}
+        />
 
-      {error && <span>{error}</span>}
+        {error && (
+          <Error title={error}>
+            <FiAlertCircle color="#c53030" size={20} />
+          </Error>
+        )}
+      </div>
     </Container>
   );
 }
