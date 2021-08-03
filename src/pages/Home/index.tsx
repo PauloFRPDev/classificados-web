@@ -9,7 +9,7 @@ export function Home() {
   return (
     <Container>
       <Content>
-        <h1>CADASTRO DE CLASSIFICADOS - CRO-RJ</h1>
+        <h1>CADASTRO DE CLASSIFICADOS</h1>
 
         <RuleSection>
           <ul>
