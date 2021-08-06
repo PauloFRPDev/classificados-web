@@ -262,9 +262,9 @@ export function NewAd() {
         'name',
         err.response.data.message !== 'Jurisdicted is in debt'
           ? 'Ops, não pudemos encontrar nenhum registro.'
-          : `Ops, o(a) profissional com o CPF ${formRef.current?.getFieldValue(
+          : `Ops, ocorreu um erro ao buscar o(a) profissional com o CPF ${formRef.current?.getFieldValue(
               'cpf',
-            )} possui débitos no CRO-RJ.`,
+            )}.`,
       );
       formRef.current?.setFieldValue('category', '');
       formRef.current?.setFieldValue('subscriptionNumber', '');
@@ -292,8 +292,8 @@ export function NewAd() {
 
           <main>
             <p>
-              O(A) profissional selecionado(a) possui débitos no sistema.
-              <br /> Para visualizar e regularizar a sua situação clique no
+              Ocorreu um erro ao buscar o cpf do profissional.
+              <br /> Para visualizar e editar seu cadastro no CRO, clique no
               seguinte link:{' '}
               <a
                 href="https://cro-rj.implanta.net.br/servicosonline/"
@@ -306,7 +306,8 @@ export function NewAd() {
 
           <footer>
             <p>
-              Já regularizou e ainda não consegue inserir um anúncio?
+              Já entrou no serviço online, não existem erros no cadastro e ainda
+              não consegue inserir um anúncio?
               <br /> Favor entrar em contato através do endereço de e-mail{' '}
               <strong>suporte@cro-rj.org.br</strong>
             </p>
