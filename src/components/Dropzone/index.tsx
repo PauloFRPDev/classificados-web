@@ -50,7 +50,7 @@ export function Dropzone({ adId, setAdId }: DropzoneProps) {
   useEffect(() => {
     const handleInsertAdFiles = async (id: string) => {
       if (files) {
-        await api.post(`/ads/${id}/files/add`, formData, {
+        await api.post(`/announcements/${id}/files/insert`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
       }

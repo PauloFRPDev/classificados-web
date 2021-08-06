@@ -27,7 +27,7 @@ export function Dashboard() {
 
   useEffect(() => {
     async function getAdsPerMonthStatistics() {
-      const response = await api.get('/statistics/ads/total');
+      const response = await api.get('/statistics/announcements/total');
 
       const adsPerMonth = response.data;
 
@@ -55,7 +55,9 @@ export function Dashboard() {
 
   useEffect(() => {
     async function getAdsPerCategoryStatistics() {
-      const response = await api.get('/statistics/ads/total_category');
+      const response = await api.get(
+        '/statistics/announcements/total_category',
+      );
 
       const adsPerCategory = response.data;
 

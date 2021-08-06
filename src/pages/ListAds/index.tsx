@@ -68,7 +68,7 @@ export function ListAds() {
     async function loadAds(): Promise<void> {
       setIsLoading(true);
 
-      const response = await api.get('/ads', {
+      const response = await api.get('/announcements', {
         params: {
           city: citySearched.toLowerCase(),
           district: districtSearched.toLowerCase(),

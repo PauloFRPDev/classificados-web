@@ -174,7 +174,7 @@ export function NewAd() {
         return;
       }
 
-      const response = await api.post('/ads', formData);
+      const response = await api.post('/announcements', formData);
 
       const { id } = response.data;
 

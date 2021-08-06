@@ -81,7 +81,7 @@ export function AcceptAds() {
     async function loadAdsToBeAccepted() {
       setIsLoading(true);
 
-      const response = await api.get('/ads/to_accept');
+      const response = await api.get('/announcements/to_accept');
 
       const retrievedAds = response.data;
 
@@ -103,7 +103,7 @@ export function AcceptAds() {
 
   const handleAcceptAd = async (adId: string) => {
     try {
-      await api.patch(`/ads/accept/${adId}`);
+      await api.patch(`/announcements/accept/${adId}`);
 
       setAds(ads.filter(ad => ad.id !== adId));
 
@@ -129,7 +129,7 @@ export function AcceptAds() {
 
   const handleDeleteAd = async (adId: string) => {
     try {
-      await api.delete(`/ads/${adId}`);
+      await api.delete(`/announcements/${adId}`);
 
       setAds(ads.filter(ad => ad.id !== adId));
 
@@ -168,7 +168,10 @@ export function AcceptAds() {
         description,
       };
 
-      const response = await api.put(`/ads/${editingAd?.id}`, formData);
+      const response = await api.put(
+        `/announcements/${editingAd?.id}`,
+        formData,
+      );
 
       const adsUpdated = ads.map(ad => {
         if (ad.id === response.data.id) {
