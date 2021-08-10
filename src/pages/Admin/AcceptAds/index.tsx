@@ -10,8 +10,9 @@ import {
 } from 'react-icons/fi';
 import { ClipLoader } from 'react-spinners';
 import * as Yup from 'yup';
-
 import { FormHandles } from '@unform/core';
+
+import abbreviateJurisdictedCategoryTitle from '../../../utils/abbreviateJurisdictedCategoryTitle';
 import api from '../../../services/api';
 import { useToast } from '../../../hooks/toast';
 
@@ -36,6 +37,7 @@ interface AdProps {
   description: string;
   created_at: string;
   parsedDate: string;
+  parsedJurisdictedCategory: string;
   city: {
     title: string;
   };
@@ -47,6 +49,10 @@ interface AdProps {
   };
   jurisdicted: {
     name: string;
+    registration_number: string;
+    category: {
+      title: string;
+    };
   };
   files: {
     filename: string;
@@ -88,6 +94,9 @@ export function AcceptAds() {
       const parsedRetrievedAds = retrievedAds.map((retrievedAd: AdProps) => ({
         ...retrievedAd,
         parsedDate: format(parseISO(retrievedAd.created_at), 'dd/MM/yyyy'),
+        parsedJurisdictedCategory: abbreviateJurisdictedCategoryTitle(
+          retrievedAd.jurisdicted.category.title,
+        ),
       }));
 
       setIsLoading(false);
@@ -267,7 +276,7 @@ export function AcceptAds() {
                 <Ad key={ad.id}>
                   <header>
                     <div>
-                      <h3>{ad.jurisdicted.name}</h3>
+                      <h3>{`${ad.jurisdicted.name} (${ad.parsedJurisdictedCategory} - ${ad.jurisdicted.registration_number})`}</h3>
                       <span>
                         {ad.email} - {ad.phone_number}
                       </span>
