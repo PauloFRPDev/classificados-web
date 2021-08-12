@@ -121,6 +121,15 @@ export function Home() {
                 e-mail para sefis@cro-rj.org.br (Fiscalização CRO-RJ).
               </span>
             </li>
+
+            <li>
+              <FiAlertCircle />
+
+              <span>
+                Não serão permitidos classificados de OPORTUNIDADE DE EMPREGO
+                que ofereçam alojamento, moradia e afins.
+              </span>
+            </li>
           </ul>
         </RuleSection>
 
