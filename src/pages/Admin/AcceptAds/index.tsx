@@ -29,6 +29,7 @@ import {
   Footer,
   Actions,
 } from './styles';
+import { Select } from '../../../components/Select';
 
 interface AdProps {
   id: string;
@@ -45,6 +46,7 @@ interface AdProps {
     title: string;
   };
   category: {
+    id: number;
     title: string;
   };
   jurisdicted: {
@@ -60,18 +62,27 @@ interface AdProps {
   }[];
 }
 
+interface CategoryProps {
+  id: number;
+  title: string;
+  value: number;
+  label: string;
+}
+
 interface AdFilesProps {
   filename: string;
   file_url: string;
 }
 
 interface EditAdFormData {
+  category_id: number;
   description: string;
 }
 
 export function AcceptAds() {
   const formRef = useRef<FormHandles>(null);
 
+  const [categories, setCategories] = useState<CategoryProps[]>([]);
   const [ads, setAds] = useState<AdProps[]>([]);
   const [adFiles, setAdFiles] = useState<AdFilesProps[]>([]);
   const [editingAd, setEditingAd] = useState<AdProps>();
@@ -131,7 +142,14 @@ export function AcceptAds() {
     }
   };
 
-  const handleEditAd = (ad: AdProps) => {
+  const handleEditAd = async (ad: AdProps) => {
+    async function loadCategories(): Promise<void> {
+      const response = await api.get('categories');
+
+      setCategories(response.data);
+    }
+
+    await loadCategories();
     setEditingAd(ad);
     setEditModalIsOpen(true);
   };
@@ -162,6 +180,7 @@ export function AcceptAds() {
       formRef.current?.setErrors({});
 
       const schema = Yup.object().shape({
+        category_id: Yup.string().required('Categoria do anúncio obrigatória'),
         description: Yup.string()
           .min(10, 'Descrição deve ter pelo menos 10 caracteres')
           .required('Anúncio obrigatório'),
@@ -171,9 +190,10 @@ export function AcceptAds() {
         abortEarly: false,
       });
 
-      const { description } = data;
+      const { category_id, description } = data;
 
       const formData = {
+        category_id,
         description,
       };
 
@@ -186,6 +206,10 @@ export function AcceptAds() {
         if (ad.id === response.data.id) {
           return {
             ...ad,
+            category_id: response.data.category_id,
+            category: categories.find(
+              category => category.value === category_id,
+            ) as CategoryProps,
             description: response.data.description,
           };
         }
@@ -231,9 +255,23 @@ export function AcceptAds() {
               <Form
                 ref={formRef}
                 onSubmit={handleEditSubmit}
-                initialData={{ description: editingAd.description }}
+                initialData={{
+                  description: editingAd.description,
+                  category_id: {
+                    ...editingAd.category,
+                    value: editingAd.category.id,
+                    label: editingAd.category.title,
+                  },
+                }}
               >
                 <div className="description-area">
+                  <Select
+                    type="text"
+                    name="category_id"
+                    label="Categoria do anúncio"
+                    placeholderText="Selecione a categoria"
+                    options={categories}
+                  />
                   <TextArea
                     name="description"
                     label="Anúncio"
