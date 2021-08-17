@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   max-width: 1120px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem 2rem;
 `;
 
 export const Content = styled.div`
@@ -14,8 +14,12 @@ export const Content = styled.div`
   align-items: center;
 
   h1 {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     align-self: flex-start;
+
+    @media (max-width: 1280px) {
+      font-size: 1.5rem;
+    }
   }
 `;
 
@@ -30,6 +34,10 @@ export const SearchHeader = styled.header`
     > div {
       display: flex;
       gap: 1rem;
+    }
+
+    > div:last-child {
+      gap: 0;
     }
 
     @media (max-width: 800px) {

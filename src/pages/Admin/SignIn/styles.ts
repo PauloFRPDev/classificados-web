@@ -26,6 +26,17 @@ export const LogoContent = styled.div`
     text-align: center;
   }
 
+  @media (max-width: 1280px) {
+    img {
+      width: 70%;
+    }
+
+    h1 {
+      font-size: 1.2rem;
+      max-width: 70%;
+    }
+  }
+
   @media (max-width: 820px) {
     display: none;
   }

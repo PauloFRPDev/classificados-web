@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  max-width: 1000px;
+  width: 100%;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
@@ -9,12 +10,16 @@ export const Container = styled.div`
   align-items: center;
 `;
 
-export const Content = styled.main`
+export const Content = styled.div`
   position: relative;
   margin: auto;
 
-  main {
+  width: 100%;
+  height: 100%;
+
+  > main {
     display: none;
+    height: 100%;
 
     &.imgActive {
       display: block;
@@ -22,7 +27,15 @@ export const Content = styled.main`
 
     img {
       width: 100%;
-      height: auto;
+      max-height: 600px;
+
+      @media (max-height: 750px) {
+        max-height: 550px;
+      }
+
+      @media (max-height: 680px) {
+        max-height: 400px;
+      }
     }
 
     /* Fading animation */
@@ -83,6 +96,8 @@ export const Content = styled.main`
 `;
 
 export const Footer = styled.footer`
+  margin-top: 0.5rem;
+
   span {
     cursor: pointer;
     height: 15px;

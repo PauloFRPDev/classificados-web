@@ -92,6 +92,7 @@ export const Content = styled.div`
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    z-index: 3;
 
     span {
       color: #fff;

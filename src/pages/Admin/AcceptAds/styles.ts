@@ -4,7 +4,7 @@ import { darken, lighten } from 'polished';
 export const Container = styled.div`
   max-width: 1120px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem 2rem;
 `;
 
 export const ModalContainer = styled.div`
@@ -70,6 +70,10 @@ export const Content = styled.div`
 
   h1 {
     margin-bottom: 1rem;
+
+    @media (max-width: 1280px) {
+      font-size: 1.5rem;
+    }
   }
 `;
 

@@ -5,7 +5,7 @@ export const Container = styled.div`
   height: 100%;
   max-width: 1120px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem 2rem;
 
   display: flex;
   align-items: center;
@@ -13,7 +13,11 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   h1 {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 1280px) {
+      font-size: 1.5rem;
+    }
   }
 
   > div {
@@ -77,7 +81,7 @@ export const RuleSection = styled.section`
     list-style: none;
 
     li + li {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
     }
 
     li {
@@ -89,6 +93,12 @@ export const RuleSection = styled.section`
         min-height: 2rem;
         margin-right: 1rem;
         color: #96030f;
+      }
+
+      @media (max-width: 1280px) {
+        > span {
+          font-size: 0.9rem;
+        }
       }
     }
   }

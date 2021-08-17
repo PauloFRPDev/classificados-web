@@ -6,7 +6,7 @@ export const Container = styled.div`
   height: 100%;
   max-width: 1120px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem 2rem;
 
   display: flex;
   flex-direction: column;
@@ -52,7 +52,11 @@ export const Content = styled.div`
 
   h1 {
     color: #111827;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 1280px) {
+      font-size: 1.5rem;
+    }
   }
 
   .name-jurisdicted {

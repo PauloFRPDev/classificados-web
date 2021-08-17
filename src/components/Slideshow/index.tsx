@@ -15,6 +15,8 @@ const customStyles = {
     padding: '1rem',
     overflow: 'hidden',
     zIndex: 3,
+    maxHeight: '90%',
+    maxWidth: '90%',
   },
   overlay: {
     zIndex: 3,
@@ -63,7 +65,9 @@ export function Slideshow({ isOpen, setIsOpen, adFiles }: SlideshowProps) {
               key={adFile.filename}
               className={`${indexImgSelected === index ? 'imgActive' : ''}`}
             >
-              <img src={adFile.file_url} alt={adFile.filename} />
+              <a href={adFile.file_url} target="blank">
+                <img src={adFile.file_url} alt={adFile.filename} />
+              </a>
             </main>
           ))}
 
