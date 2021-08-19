@@ -12,7 +12,14 @@ import { Input } from '../../components/Input';
 import { Slideshow } from '../../components/Slideshow';
 import { Select } from '../../components/Select';
 
-import { Container, Content, SearchHeader, AdsList, Ad } from './styles';
+import {
+  Container,
+  Content,
+  SearchHeader,
+  AdsList,
+  Ad,
+  Pagination,
+} from './styles';
 
 interface AdProps {
   id: string;
@@ -60,6 +67,7 @@ export function ListAds() {
 
   const [ads, setAds] = useState<AdProps[]>([]);
   const [adFiles, setAdFiles] = useState<AdFilesProps[]>([]);
+  const [totalPages, setTotalPages] = useState(0);
 
   const [slideshowModalIsOpen, setSlideshowModalIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -82,10 +90,14 @@ export function ListAds() {
 
       const retrievedAds = response.data;
 
-      const parsedRetrievedAds = retrievedAds.map((retrievedAd: AdProps) => ({
-        ...retrievedAd,
-        parsedDate: format(parseISO(retrievedAd.created_at), 'dd/MM/yyyy'),
-      }));
+      setTotalPages(retrievedAds.totalPages);
+
+      const parsedRetrievedAds = retrievedAds.announcements.map(
+        (retrievedAd: AdProps) => ({
+          ...retrievedAd,
+          parsedDate: format(parseISO(retrievedAd.created_at), 'dd/MM/yyyy'),
+        }),
+      );
 
       setIsLoading(false);
       setAds(parsedRetrievedAds);
@@ -206,6 +218,12 @@ export function ListAds() {
                 <FiFrown />
                 <span>Desculpe, não foi possível encontrar nenhum anúncio</span>
               </div>
+            )}
+            {totalPages !== 0 && (
+              <Pagination>
+                <button type="button">Anterior</button>
+                <button type="button">Próxima</button>
+              </Pagination>
             )}
           </AdsList>
         )}

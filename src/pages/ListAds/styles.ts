@@ -164,3 +164,5 @@ export const Ad = styled.div`
     }
   }
 `;
+
+export const Pagination = styled.div``;
