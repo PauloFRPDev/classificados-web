@@ -227,7 +227,7 @@ export function ListAds() {
                 <span>Desculpe, não foi possível encontrar nenhum anúncio</span>
               </div>
             )}
-            {totalPages !== 1 && (
+            {totalPages > 1 && (
               <Pagination>
                 <button
                   type="button"
