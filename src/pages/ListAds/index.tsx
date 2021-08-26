@@ -68,6 +68,7 @@ export function ListAds() {
   const [ads, setAds] = useState<AdProps[]>([]);
   const [adFiles, setAdFiles] = useState<AdFilesProps[]>([]);
   const [totalPages, setTotalPages] = useState(0);
+  const [pageSelected, setPageSelected] = useState(1);
 
   const [slideshowModalIsOpen, setSlideshowModalIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -85,6 +86,7 @@ export function ListAds() {
               ? descriptionSearched.toLowerCase()
               : null,
           category: categorySearched,
+          page: pageSelected,
         },
       });
 
@@ -113,7 +115,13 @@ export function ListAds() {
 
     loadAds();
     loadCategories();
-  }, [categorySearched, citySearched, districtSearched, descriptionSearched]);
+  }, [
+    categorySearched,
+    citySearched,
+    districtSearched,
+    descriptionSearched,
+    pageSelected,
+  ]);
 
   const handleSearch = () => {
     // TODO
@@ -219,10 +227,28 @@ export function ListAds() {
                 <span>Desculpe, não foi possível encontrar nenhum anúncio</span>
               </div>
             )}
-            {totalPages !== 0 && (
+            {totalPages !== 1 && (
               <Pagination>
-                <button type="button">Anterior</button>
-                <button type="button">Próxima</button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    pageSelected > 1 && setPageSelected(pageSelected - 1)
+                  }
+                  disabled={pageSelected === 1}
+                >
+                  Anterior
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    pageSelected < totalPages &&
+                    setPageSelected(pageSelected + 1)
+                  }
+                  disabled={pageSelected === totalPages}
+                >
+                  Próxima
+                </button>
               </Pagination>
             )}
           </AdsList>

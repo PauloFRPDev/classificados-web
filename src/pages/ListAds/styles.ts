@@ -165,4 +165,21 @@ export const Ad = styled.div`
   }
 `;
 
-export const Pagination = styled.div``;
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+
+  > button {
+    padding: 0.5rem 2rem;
+    background: #96030f;
+    color: #fff;
+    border: none;
+    border-radius: 0.25rem;
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+`;
