@@ -12,6 +12,7 @@ import { ClipLoader } from 'react-spinners';
 import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
 
+import { MdSearch } from 'react-icons/md';
 import abbreviateJurisdictedCategoryTitle from '../../../utils/abbreviateJurisdictedCategoryTitle';
 import api from '../../../services/api';
 import { useToast } from '../../../hooks/toast';
@@ -19,17 +20,20 @@ import { useToast } from '../../../hooks/toast';
 import { Slideshow } from '../../../components/Slideshow';
 import { ModalComponent } from '../../../components/Modal';
 import { TextArea } from '../../../components/TextArea';
+import { Select } from '../../../components/Select';
+import { Input } from '../../../components/Input';
 
 import {
   Container,
   ModalContainer,
   Content,
+  SearchHeader,
+  ToggleAll,
   AdsList,
   Ad,
   Footer,
   Actions,
 } from './styles';
-import { Select } from '../../../components/Select';
 
 interface AdProps {
   id: string;
@@ -39,6 +43,8 @@ interface AdProps {
   created_at: string;
   parsedDate: string;
   parsedJurisdictedCategory: string;
+  is_published: boolean;
+  deleted_at: Date;
   city: {
     title: string;
   };
@@ -82,6 +88,8 @@ interface EditAdFormData {
 export function AcceptAds() {
   const formRef = useRef<FormHandles>(null);
 
+  const [showAllAds, setShowAllAds] = useState(false);
+  const [registrationSearched, setRegistrationSearched] = useState('');
   const [categories, setCategories] = useState<CategoryProps[]>([]);
   const [ads, setAds] = useState<AdProps[]>([]);
   const [adFiles, setAdFiles] = useState<AdFilesProps[]>([]);
@@ -98,7 +106,17 @@ export function AcceptAds() {
     async function loadAdsToBeAccepted() {
       setIsLoading(true);
 
-      const response = await api.get('/announcements/to_accept');
+      const response = showAllAds
+        ? await api.get('/announcements/admin/list', {
+            params: {
+              registrationNumber: registrationSearched,
+            },
+          })
+        : await api.get('/announcements/to_accept', {
+            params: {
+              registrationNumber: registrationSearched,
+            },
+          });
 
       const retrievedAds = response.data;
 
@@ -115,7 +133,7 @@ export function AcceptAds() {
     }
 
     loadAdsToBeAccepted();
-  }, []);
+  }, [registrationSearched, showAllAds]);
 
   const handleOpenSlideshow = () => {
     setSlideshowModalIsOpen(true);
@@ -236,6 +254,10 @@ export function AcceptAds() {
     }
   };
 
+  const handleSearch = () => {
+    // TODO
+  };
+
   return (
     <Container>
       <Slideshow
@@ -305,6 +327,33 @@ export function AcceptAds() {
       <Content>
         <h1>Anúncios pendentes</h1>
 
+        <SearchHeader>
+          <Form ref={formRef} onSubmit={handleSearch}>
+            <div>
+              <Input
+                name="registration_number"
+                label="Número de Registro"
+                value={registrationSearched}
+                onChange={e => setRegistrationSearched(e.target.value)}
+                placeholder="Digite o número de registro para pesquisar"
+                type="number"
+                icon={MdSearch}
+              />
+
+              <ToggleAll>
+                <p>Mostrar todos?</p>
+                <label>
+                  <input
+                    type="checkbox"
+                    onChange={() => setShowAllAds(!showAllAds)}
+                  />
+                  <span className="slider round" />
+                </label>
+              </ToggleAll>
+            </div>
+          </Form>
+        </SearchHeader>
+
         {isLoading ? (
           <ClipLoader />
         ) : (
@@ -312,6 +361,11 @@ export function AcceptAds() {
             {ads.length !== 0 ? (
               ads.map(ad => (
                 <Ad key={ad.id}>
+                  {ad.deleted_at !== null && (
+                    <div className="canceled">
+                      <h1>CANCELADO</h1>
+                    </div>
+                  )}
                   <header>
                     <div>
                       <h3>{`${ad.jurisdicted.name} (${ad.parsedJurisdictedCategory} - ${ad.jurisdicted.registration_number})`}</h3>
@@ -352,17 +406,25 @@ export function AcceptAds() {
                         <button
                           type="button"
                           onClick={() => handleAcceptAd(ad.id)}
+                          disabled={
+                            ad.deleted_at !== null || ad.is_published === true
+                          }
                         >
                           <FiCheck />
                         </button>
 
-                        <button type="button" onClick={() => handleEditAd(ad)}>
+                        <button
+                          type="button"
+                          onClick={() => handleEditAd(ad)}
+                          disabled={ad.deleted_at !== null}
+                        >
                           <FiEdit2 />
                         </button>
 
                         <button
                           type="button"
                           onClick={() => handleDeleteAd(ad.id)}
+                          disabled={ad.deleted_at !== null}
                         >
                           <FiTrash />
                         </button>

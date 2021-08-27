@@ -67,6 +67,8 @@ export const ModalContainer = styled.div`
 
 export const Content = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
 
   h1 {
     margin-bottom: 1rem;
@@ -74,6 +76,93 @@ export const Content = styled.div`
     @media (max-width: 1280px) {
       font-size: 1.5rem;
     }
+  }
+`;
+
+export const SearchHeader = styled.div`
+  margin-bottom: 1rem;
+
+  form {
+    > div {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+
+      @media (max-width: 500px) {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  }
+`;
+
+export const ToggleAll = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  /* The switch - the box around the slider */
+  > label {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+
+  /* Hide default HTML checkbox */
+  > label input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  /* The slider */
+  span {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: '';
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #96030f;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+
+  input:checked + .slider {
+    background-color: ${lighten(0.2, '#96030f')};
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px ${lighten(0.2, '#96030f')};
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
   }
 `;
 
@@ -114,6 +203,28 @@ export const Ad = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  position: relative;
+
+  .canceled {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #96030f80;
+    color: #fff;
+    border-radius: 0.5rem;
+
+    > h1 {
+      transform: rotateZ(10deg);
+    }
+  }
 
   header {
     display: flex;
@@ -219,7 +330,11 @@ export const Actions = styled.div`
       height: 1.3rem;
     }
 
-    &:hover {
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
       border: 1px solid #fff;
       background: #96030f;
       color: #fff;
