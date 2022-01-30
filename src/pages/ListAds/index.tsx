@@ -149,21 +149,30 @@ export function ListAds() {
                 name="city"
                 label="Cidade"
                 value={citySearched}
-                onChange={e => setCitySearched(e.target.value)}
+                onChange={e => {
+                  setPageSelected(1);
+                  setCitySearched(e.target.value);
+                }}
                 icon={MdSearch}
               />
               <Input
                 name="district"
                 label="Bairro"
                 value={districtSearched}
-                onChange={e => setDistrictSearched(e.target.value)}
+                onChange={e => {
+                  setPageSelected(1);
+                  setDistrictSearched(e.target.value);
+                }}
                 icon={MdSearch}
               />
               <Input
                 name="description"
                 label="Descrição"
                 value={descriptionSearched}
-                onChange={e => setDescriptionSearched(e.target.value)}
+                onChange={e => {
+                  setPageSelected(1);
+                  setDescriptionSearched(e.target.value);
+                }}
                 icon={MdSearch}
               />
             </div>

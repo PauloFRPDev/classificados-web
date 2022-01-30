@@ -1,5 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { darken, lighten } from 'polished';
+
+interface MultipleRecordCardProps {
+  selected: boolean;
+}
 
 export const Container = styled.div`
   /* height: calc(100vh - 5rem); */
@@ -38,6 +42,45 @@ export const ModalContainer = styled.div`
     margin-top: 2rem;
     text-align: center;
   }
+
+  > div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+
+    margin-top: 2rem;
+  }
+`;
+
+export const MultipleRecordCard = styled.div<MultipleRecordCardProps>`
+  background-color: #eaeaea;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > strong {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  &:hover {
+    background-color: ${darken(0.3, '#eaeaea')};
+    color: #ffffff;
+  }
+
+  ${props =>
+    props.selected &&
+    css`
+      border: 2px solid #96030f;
+      box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.35);
+    `}
 `;
 
 export const Content = styled.div`

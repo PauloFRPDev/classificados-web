@@ -24,10 +24,13 @@ import {
   FormSecondLine,
   FormForthLine,
   ActionsContainer,
+  MultipleRecordCard,
 } from './styles';
 
 interface AdFormData {
   cpf: number;
+  category: string;
+  subscriptionNumber: string;
   phone_number: number;
   email: string;
   category_id: number;
@@ -68,7 +71,12 @@ export function NewAd() {
   const [categories, setCategories] = useState<CategoryProps[]>([]);
   const [cities, setCities] = useState<CityProps[]>([]);
   const [districts, setDistricts] = useState<DistrictProps[]>([]);
-  const [jurisdicted, setJurisdicted] = useState<JurisdictedData>();
+  const [jurisdicted, setJurisdicted] = useState<JurisdictedData[]>();
+  const [multipleRecords, setMultipleRecords] = useState(false);
+  const [
+    selectedJurisdicted,
+    setSelectedJurisdicted,
+  ] = useState<JurisdictedData>({} as JurisdictedData);
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [jurisdictedInDebt, setJurisdictedInDebt] = useState(false);
@@ -145,6 +153,8 @@ export function NewAd() {
 
       const {
         cpf,
+        category,
+        subscriptionNumber,
         phone_number,
         email,
         category_id,
@@ -155,6 +165,8 @@ export function NewAd() {
 
       const formData = {
         cpf,
+        subscriptionCategory: category,
+        subscriptionNumber,
         phone_number,
         email,
         category_id: Number(category_id),
@@ -240,6 +252,7 @@ export function NewAd() {
       if (cpf.length === 14) {
         setIsSearching(true);
         setJurisdictedInDebt(false);
+        setMultipleRecords(false);
         formRef.current?.setFieldValue('name', '');
 
         const response = await api.get('jurisdicted', {
@@ -271,13 +284,29 @@ export function NewAd() {
     }
   };
 
+  const handleMultipleRecordPick = (pickedJurisdicted: JurisdictedData) => {
+    setSelectedJurisdicted(pickedJurisdicted);
+
+    formRef.current?.setFieldValue('name', pickedJurisdicted.nomeRazaoSocial);
+    formRef.current?.setFieldValue('category', pickedJurisdicted.category);
+    formRef.current?.setFieldValue(
+      'subscriptionNumber',
+      pickedJurisdicted.numeroRegistro,
+    );
+  };
+
   useEffect(() => {
     if (jurisdicted) {
-      formRef.current?.setFieldValue('name', jurisdicted.nomeRazaoSocial);
-      formRef.current?.setFieldValue('category', jurisdicted.category);
+      if (jurisdicted.length > 1) {
+        setMultipleRecords(true);
+        return;
+      }
+
+      formRef.current?.setFieldValue('name', jurisdicted[0].nomeRazaoSocial);
+      formRef.current?.setFieldValue('category', jurisdicted[0].category);
       formRef.current?.setFieldValue(
         'subscriptionNumber',
-        jurisdicted.numeroRegistro,
+        jurisdicted[0].numeroRegistro,
       );
     }
   }, [jurisdicted]);
@@ -312,6 +341,37 @@ export function NewAd() {
               <strong>suporte@cro-rj.org.br</strong>
             </p>
           </footer>
+        </ModalContainer>
+      </ModalComponent>
+
+      <ModalComponent isOpen={multipleRecords}>
+        <ModalContainer>
+          <header>
+            <h3>MÚLTIPLOS REGISTROS!</h3>
+          </header>
+
+          <main>
+            Você possui múltiplos registros elegíveis para inserção de um
+            anúncio. Favor selecione um registro:
+          </main>
+
+          <div>
+            {jurisdicted &&
+              jurisdicted.map(jur => (
+                <MultipleRecordCard
+                  key={jur.numeroRegistro}
+                  onClick={() => handleMultipleRecordPick(jur)}
+                  selected={
+                    selectedJurisdicted.numeroRegistro === jur.numeroRegistro
+                  }
+                >
+                  <strong>{jur.nomeRazaoSocial}</strong>
+                  <p>
+                    {jur.category} - {jur.numeroRegistro}
+                  </p>
+                </MultipleRecordCard>
+              ))}
+          </div>
         </ModalContainer>
       </ModalComponent>
 
