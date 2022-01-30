@@ -267,18 +267,21 @@ export function NewAd() {
     } catch (err) {
       setIsSearching(false);
 
-      if (err.response.data.message === 'Jurisdicted is in debt') {
-        setJurisdictedInDebt(true);
+      if (err.response.data) {
+        if (err.response.data.message === 'Jurisdicted is in debt') {
+          setJurisdictedInDebt(true);
+        }
+
+        formRef.current?.setFieldValue(
+          'name',
+          err.response.data.message !== 'Jurisdicted is in debt'
+            ? 'Ops, não pudemos encontrar nenhum registro.'
+            : `Ops, ocorreu um erro ao buscar o(a) profissional com o CPF ${formRef.current?.getFieldValue(
+                'cpf',
+              )}.`,
+        );
       }
 
-      formRef.current?.setFieldValue(
-        'name',
-        err.response.data.message !== 'Jurisdicted is in debt'
-          ? 'Ops, não pudemos encontrar nenhum registro.'
-          : `Ops, ocorreu um erro ao buscar o(a) profissional com o CPF ${formRef.current?.getFieldValue(
-              'cpf',
-            )}.`,
-      );
       formRef.current?.setFieldValue('category', '');
       formRef.current?.setFieldValue('subscriptionNumber', '');
     }
