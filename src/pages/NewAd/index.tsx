@@ -263,11 +263,23 @@ export function NewAd() {
 
         setIsSearching(false);
         setJurisdicted(response.data);
+
+        if (response.data.length === 0) {
+          formRef.current?.setFieldValue(
+            'name',
+            `Ops, ocorreu um erro ao buscar o(a) profissional com o CPF ${formRef.current?.getFieldValue(
+              'cpf',
+            )}.`,
+          );
+          formRef.current?.setFieldValue('category', '');
+          formRef.current?.setFieldValue('subscriptionNumber', '');
+          return;
+        }
       }
     } catch (err) {
       setIsSearching(false);
 
-      if (err.response.data) {
+      if (err?.response?.data) {
         if (err.response.data.message === 'Jurisdicted is in debt') {
           setJurisdictedInDebt(true);
         }
@@ -300,16 +312,20 @@ export function NewAd() {
 
   useEffect(() => {
     if (jurisdicted) {
+      if (jurisdicted.length === 0) {
+        return;
+      }
+
       if (jurisdicted.length > 1) {
         setMultipleRecords(true);
         return;
       }
 
-      formRef.current?.setFieldValue('name', jurisdicted[0].nomeRazaoSocial);
-      formRef.current?.setFieldValue('category', jurisdicted[0].category);
+      formRef.current?.setFieldValue('name', jurisdicted[0]?.nomeRazaoSocial);
+      formRef.current?.setFieldValue('category', jurisdicted[0]?.category);
       formRef.current?.setFieldValue(
         'subscriptionNumber',
-        jurisdicted[0].numeroRegistro,
+        jurisdicted[0]?.numeroRegistro,
       );
     }
   }, [jurisdicted]);
